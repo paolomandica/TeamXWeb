@@ -1,12 +1,9 @@
 package com.jpl.teamx.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.jpl.teamx.form.AddTeamForm;
 import com.jpl.teamx.model.Team;
-import com.jpl.teamx.model.User;
 import com.jpl.teamx.repository.TeamRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
