@@ -1,8 +1,10 @@
 HELP.md
 .gradle
 /build/
+/src/main/resources/application.properties
 !gradle/wrapper/gradle-wrapper.jar
 
+### Google credentials ###
 ### STS ###
 .apt_generated
 .classpath

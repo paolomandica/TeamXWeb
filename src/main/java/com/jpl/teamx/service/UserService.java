@@ -36,4 +36,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    /*Sends email from current user to admin.
+    * If it cannot send the email it throws an Exception.
+    * More details soon ...*/
+    public void sendEmail(User currentUser,
+                          User admin,
+                          String message) throws Exception{
+
+    }
+
 }
