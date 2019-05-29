@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jpl.teamx.form.AddTeamForm;
 import com.jpl.teamx.model.Team;
+import com.jpl.teamx.model.User;
 import com.jpl.teamx.service.TeamService;
 import com.jpl.teamx.service.UserService;
 
@@ -46,11 +47,29 @@ public class TeamXController {
 	
 	/* Crea un nuovo team. */
 	@PostMapping("/teams")
-	public String addTeam(Model model,
-	@ModelAttribute("form") AddTeamForm form) {
+	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form) {
 	Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation());
 	model.addAttribute("team", team);
 	return "get-team";
+	}
+	
+	/* cancella un team . */
+	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
+	public String deleteTeam(Model model,@PathVariable Long teamId) {
+		Team team = teamService.getTeam(teamId);
+		teamService.deleteTeam(team);
+		return "delete-team";
+	}
+	
+	/* join in  un team . */
+	@GetMapping(value = "/teams/{teamId}", params = { "join" })
+	public String joinTeam(Model model,@PathVariable Long teamId) throws Exception {
+		Team team = teamService.getTeam(teamId);
+		String message = "da modificare";
+		User u = new User("da","cambiare","non so come", "gestire la sessione");
+;		userService.sendEmail(u, u, message);
+		teamService.deleteTeam(team);
+		return "join-team";
 	}
 
 }
