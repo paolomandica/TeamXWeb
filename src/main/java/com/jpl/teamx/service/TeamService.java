@@ -2,8 +2,8 @@ package com.jpl.teamx.service;
 
 import java.util.List;
 
-import com.jpl.teamx.form.AddTeamForm;
 import com.jpl.teamx.model.Team;
+import com.jpl.teamx.model.User;
 import com.jpl.teamx.repository.TeamRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
     
-    public Team addTeam(AddTeamForm atf) {
-        Team t = new Team(atf.getAdmin(), atf.getName(), atf.getDescription(), atf.getLocation());
+    public Team createTeam(User admin, String name, String description, String location) {
+        Team t = new Team(admin, name, description, location);
         return teamRepository.save(t);
     }
 
