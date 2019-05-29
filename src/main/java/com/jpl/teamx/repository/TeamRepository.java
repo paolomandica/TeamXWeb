@@ -1,6 +1,6 @@
 package com.jpl.teamx.repository;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.jpl.teamx.model.Team;
 
@@ -11,6 +11,6 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
     public Team findByName(String name);
 
     @Override
-    public Collection<Team> findAll();
+    public List<Team> findAll();
 
 }
