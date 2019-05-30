@@ -18,7 +18,6 @@ public class Team {
 	private Long id;
 	
 	@ManyToOne
-	@Column
 	private User admin;
 	
 	@Column(nullable = false)
