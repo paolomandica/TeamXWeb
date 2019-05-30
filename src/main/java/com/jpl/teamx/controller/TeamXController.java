@@ -1,5 +1,6 @@
 package com.jpl.teamx.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class TeamXController {
 	/* restituisce tutti i team */
 	@GetMapping("/teams")
 	public @ResponseBody String getTeams(Model model) {
-		Map<Long, Team> teams = teamService.getAllTeams();
+		List <Team>teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "get-teams";
 	}
@@ -67,8 +68,8 @@ public class TeamXController {
 		Team team = teamService.getTeam(teamId);
 		String message = "da modificare";
 		User u = new User("da","cambiare","non so come", "gestire la sessione");
-;		userService.sendEmail(u, u, message);
-		teamService.deleteTeam(team);
+		userService.sendEmail(u, u, message);
+
 		return "join-team";
 	}
 
