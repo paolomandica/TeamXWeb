@@ -1,35 +1,22 @@
-package com.jpl.teamx.model;
+package com.jpl.teamx.form;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Teams")
-public class Team {
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
-	private Long id;
-	
-	@ManyToOne
+import com.jpl.teamx.model.User;
+
+public class AddTeamForm {
 	private User admin;
-	
-	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = false)
 	private String description;
 	
-	@Column
 	private String location;
 	
-	public Team(User admin, String name, String description, String location) {
+	public AddTeamForm() {
+		
+	}
+	
+	public AddTeamForm(User admin, String name, String description, String location) {
 		this.admin = admin;
 		this.name = name;
 		this.description = description;
@@ -68,7 +55,6 @@ public class Team {
 		this.location = location;
 	}
 
-	public Long getId() {
-		return id;
-	}
+	
+
 }

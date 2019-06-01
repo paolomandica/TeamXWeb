@@ -1,8 +1,6 @@
 package com.jpl.teamx.service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.jpl.teamx.model.Team;
 import com.jpl.teamx.model.User;
@@ -19,8 +17,8 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
     
-    public Team createTeam(User admin, String nome, String desc, String location) {
-        Team t = new Team(admin, nome, desc, location);
+    public Team createTeam(User admin, String name, String description, String location) {
+        Team t = new Team(admin, name, description, location);
         return teamRepository.save(t);
     }
 
@@ -32,13 +30,7 @@ public class TeamService {
         return teamRepository.findById(id).orElse(null);
     }
 
-    public Map<Long,Team> getAllTeams() {
-        Collection<Team> teamsCollection = teamRepository.findAll();
-        Map<Long,Team> teams = new HashMap<>();
-
-        for (Team t : teamsCollection) {
-            teams.put(t.getId(), t);
-        }
-        return teams;
+    public List<Team> getAllTeams() {
+        return teamRepository.findAll();
     }
 }
