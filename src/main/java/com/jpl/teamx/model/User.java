@@ -20,7 +20,6 @@ public class User {
     @OneToMany(mappedBy = "admin",
     cascade = {CascadeType.PERSIST,
             CascadeType.REMOVE})
-    @Column
     private List<Team> createdTeams;
 
     public User(String fullName,

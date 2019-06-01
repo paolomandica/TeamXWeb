@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableOAuth2Client
-public class GoogleOpenIdConnectConfig { /*
+public class GoogleOpenIdConnectConfig {
     @Value("${google.clientId}")
     private String clientId;
 
@@ -48,5 +48,5 @@ public class GoogleOpenIdConnectConfig { /*
     public OAuth2RestTemplate googleOpenIdTemplate(OAuth2ClientContext clientContext){
         return new OAuth2RestTemplate(googleOpenId(), clientContext);
     }
-*/
+
 }
