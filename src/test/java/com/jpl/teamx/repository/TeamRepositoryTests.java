@@ -1,7 +1,6 @@
 package com.jpl.teamx.repository;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 import com.jpl.teamx.model.Team;
 import com.jpl.teamx.model.User;
