@@ -8,9 +8,9 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TeamRepository extends CrudRepository<Team, Long> {
 
-    public Team findByName(String name);
+    Team findByName(String name);
 
     @Override
-    public List<Team> findAll();
+    List<Team> findAll();
 
 }
