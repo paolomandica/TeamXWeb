@@ -11,7 +11,7 @@ public class Team {
 	@Column
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private User admin;
 	
 	@Column(nullable = false)
