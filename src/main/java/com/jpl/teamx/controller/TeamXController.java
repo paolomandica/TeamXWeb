@@ -27,7 +27,7 @@ public class TeamXController {
 	private TeamService teamService = new TeamService();
 	private UserService userService = new UserService();
 
-	@GetMapping("/")
+	@GetMapping("/index")
 	public String index() {
 		return "index";
 	}
@@ -41,9 +41,9 @@ public class TeamXController {
 	/* restituisce tutti i team */
 	@GetMapping("/teams")
 	public @ResponseBody String getTeams(Model model) {
-		List<Team> teams = teamService.getAllTeams();
-		model.addAttribute("teams", teams);
-		return "get-teams";
+		//List<Team> teams = teamService.getAllTeams();
+		//model.addAttribute("teams", teams);
+		return "teams";
 	}
 
 	/* Trova il team con teamId. */
