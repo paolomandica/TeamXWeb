@@ -23,11 +23,11 @@ public class TeamRepositoryTests {
     public void saveOneTeam() {
 
         User admin = new User("paolo","paolo@prova.com","testurl","imageurl");
-        Team team = new Team(admin,"prova","prova desc", "prova loc");
+        Team team = new Team(admin,"prova nome","prova desc", "prova loc");
 
         teamRepository.save(team);
         Team found = teamRepository.findById(team.getId()).get();
 
-        assertEquals(found.getName(), team.getName());
+        assertEquals(found.getId(), team.getId());
     }
 }
