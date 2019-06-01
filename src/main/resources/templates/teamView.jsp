@@ -7,6 +7,6 @@
     <title>Team View</title>
 </head>
 <body>
-    Questo è il nome: ${team.name}
+    Questo e il nome: ${prova}
 </body>
 </html>

@@ -22,7 +22,6 @@ import com.jpl.teamx.service.UserService;
 
 
 @Controller
-
 public class TeamXController {
 	private TeamService teamService = new TeamService();
 	private UserService userService = new UserService();
@@ -32,18 +31,13 @@ public class TeamXController {
 		return "index";
 	}
 
-	/*@RequestMapping("/")
-	public String index() {
-		System.out.println("Looking in the index controller.........");
-		return "index";
-	} */
 
 	/* restituisce tutti i team */
 	@GetMapping("/teams")
-	public @ResponseBody String getTeams(Model model) {
-		//List<Team> teams = teamService.getAllTeams();
-		//model.addAttribute("teams", teams);
-		return "teams";
+	public String getTeams(Model model) {
+		List<Team> teams = teamService.getAllTeams();
+		model.addAttribute("teams", teams);
+		return "get-teams";
 	}
 
 	/* Trova il team con teamId. */
@@ -72,8 +66,9 @@ public class TeamXController {
 	/* cancella un team . */
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
 	public String deleteTeam(Model model, @PathVariable Long teamId) {
-		Team team = teamService.getTeam(teamId);
-		teamService.deleteTeam(team);
+		//Team team = teamService.getTeam(teamId);
+		//teamService.deleteTeam(team);
+		model.addAttribute("prova", teamId);
 		return "delete-team";
 	}
 
