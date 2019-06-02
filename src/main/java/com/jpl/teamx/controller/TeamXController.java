@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jpl.teamx.form.AddTeamForm;
@@ -33,11 +34,11 @@ public class TeamXController {
 	@Autowired
 	private UserService userService ;
 
-	/*@RequestMapping("/")
+	@GetMapping("/index")
 	public String index() {
-		System.out.println("Looking in the index controller.........");
 		return "index";
-	} */
+	}
+
 
 	/* restituisce tutti i team */
 	@GetMapping("/teams")
@@ -52,7 +53,7 @@ public class TeamXController {
 		return "login";
 	}
 
-	/* Trova il team con teamId. */
+	/* Trova il team con teamId.*/
 	@GetMapping("/teams/{teamId}")
 	public String getRestaurant(Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
@@ -78,12 +79,13 @@ public class TeamXController {
 	/* cancella un team . */
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
 	public String deleteTeam(Model model, @PathVariable Long teamId) {
-		Team team = teamService.getTeam(teamId);
-		teamService.deleteTeam(team);
+		//Team team = teamService.getTeam(teamId);
+		//teamService.deleteTeam(team);
+		model.addAttribute("prova", teamId);
 		return "delete-team";
 	}
 
-	/* join in un team . */
+	/* join in un team */
 	@GetMapping(value = "/teams/{teamId}", params = { "join" })
 	public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {
 		Team team = teamService.getTeam(teamId);
