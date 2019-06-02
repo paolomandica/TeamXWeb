@@ -16,10 +16,8 @@ public class UserService {
 
     public User createUser(String fullName,
                            String email,
-                           String profileUrl,
                            String imageUrl){
-        User user = new User(fullName, email,
-                profileUrl, imageUrl);
+        User user = new User(fullName, email, imageUrl);
         return userRepository.save(user);
     }
 
