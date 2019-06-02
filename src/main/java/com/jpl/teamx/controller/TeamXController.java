@@ -45,7 +45,7 @@ public class TeamXController {
 	public String getTeams(Model model) {
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
-		return "teams.html";
+		return "get-teams";
 	}
 
 	@GetMapping("/custom-login")
