@@ -9,6 +9,6 @@ import java.util.Collection;
 public interface UserRepository
 extends CrudRepository<User, Long> {
     public User findByEmail(String email);
-    public User findByFullName(String fullName);
+    public User findByName(String name);
     public Collection<User> findAll();
 }

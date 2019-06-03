@@ -10,25 +10,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
-    private String fullName;
+    private String name;
     @Column(nullable = false)
     private String email;
-    @Column
-    private String profileUrl;
     @Column
     private String imageUrl;
     @OneToMany(mappedBy = "admin",
     cascade = {CascadeType.PERSIST,
             CascadeType.REMOVE})
     private List<Team> createdTeams;
-
-    public User(String fullName,
+    
+    public User(){}
+    
+    public User(String name,
                 String email,
-                String profileUrl,
                 String imageUrl) {
-        this.fullName = fullName;
+        this.name = name;
         this.email = email;
-        this.profileUrl = profileUrl;
         this.imageUrl = imageUrl;
     }
 
@@ -37,12 +35,12 @@ public class User {
         return id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -51,14 +49,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getProfileUrl() {
-        return profileUrl;
-    }
-
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
     }
 
     public String getImageUrl() {
