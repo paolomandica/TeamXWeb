@@ -1,13 +1,17 @@
 package com.jpl.teamx.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import org.aspectj.weaver.ast.Var;
+import org.h2.store.PageInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.jpl.teamx.form.AddTeamForm;
 import com.jpl.teamx.model.Team;
 import com.jpl.teamx.model.User;
+import com.jpl.teamx.service.AwsService;
 import com.jpl.teamx.service.TeamService;
 import com.jpl.teamx.service.UserService;
 
@@ -33,6 +42,8 @@ public class TeamXController {
 	private TeamService teamService;
 	@Autowired
 	private UserService userService ;
+	@Autowired
+	private AwsService awsService;
 
 	@GetMapping("/index")
 	public String index() {
@@ -43,6 +54,10 @@ public class TeamXController {
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model) {
+		List<Bucket> buckets = awsService.getS3client().listBuckets();
+		for(Bucket bucket : buckets) {
+		    System.out.println(bucket.getName());
+		}
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "teams";
@@ -71,7 +86,8 @@ public class TeamXController {
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
 	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form) {
-		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation());
+		String urlImage = awsService.uploadImage("");
+		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(),form.getUrlImage());
 		model.addAttribute("team", team);
 		return "team";
 	}
@@ -95,5 +111,7 @@ public class TeamXController {
 		model.addAttribute("team", team);
 		return "team";
 	}
+	
+	
 
 }

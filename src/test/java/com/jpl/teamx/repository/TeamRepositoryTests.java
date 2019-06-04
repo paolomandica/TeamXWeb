@@ -28,8 +28,8 @@ public class TeamRepositoryTests {
     @Before
     public void setUp() {
         admin = new User("paolo","paolo@prova.com","testurl");
-        team1 = new Team(admin,"prova","prova desc", "prova loc");
-        team2 = new Team(admin, "prova2", "prova desc 2", "prova loc 2");
+        team1 = new Team(admin,"prova","prova desc", "prova loc","");
+        team2 = new Team(admin, "prova2", "prova desc 2", "prova loc 2","") ;
         teamRepository.save(team1);
         teamRepository.save(team2);
     }
