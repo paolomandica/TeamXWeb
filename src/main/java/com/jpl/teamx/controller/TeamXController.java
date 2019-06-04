@@ -54,10 +54,6 @@ public class TeamXController {
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model) {
-		List<Bucket> buckets = awsService.getS3client().listBuckets();
-		for(Bucket bucket : buckets) {
-		    System.out.println(bucket.getName());
-		}
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "teams";
@@ -86,7 +82,7 @@ public class TeamXController {
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
 	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form) {
-		String urlImage = awsService.uploadImage("");
+		//String urlImage = awsService.uploadImage("");
 		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(),form.getUrlImage());
 		model.addAttribute("team", team);
 		return "team";
@@ -96,19 +92,25 @@ public class TeamXController {
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
 	public String deleteTeam(Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
+		if(team.getAdmin() == new User()) {// da introdurre user corrente
 		teamService.deleteTeam(team);
-		model.addAttribute("team", team);
+		model.addAttribute("message", "team eliminato con successo");
 		return "teams";
+		}
+		model.addAttribute("team", team);
+		model.addAttribute("error", "ci hai provato!!");
+		return "team";
 	}
 
 	/** join in un team */
-	@GetMapping(value = "/teams/{teamId}", params = { "join" })
+	@PostMapping(value = "/teams/{teamId}", params = { "join" })
 	public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {
 		Team team = teamService.getTeam(teamId);
 		String message = "da modificare";
 		User u = new User("da", "cambiare", "non so come");
 		userService.sendEmail(u, u, message);
 		model.addAttribute("team", team);
+		model.addAttribute("message", "richiesta inviata con successo");
 		return "team";
 	}
 	

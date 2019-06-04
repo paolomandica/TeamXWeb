@@ -3,7 +3,11 @@ package com.jpl.teamx.service;
 
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +27,13 @@ public class AwsService {
 	
 	private AmazonS3 s3client;
 	
-	@Value("${cloud.aws.credentials.accessKey}")
+
 	private String user;
-	
-	@Value("${cloud.aws.credentials.secretKey}")
 	private String pwd;
 
 	public AwsService() {
-		System.out.println("user" + user + "/npwd" + pwd);
-		this.credentials = new BasicAWSCredentials("", "+14SC");
+		setProperties();
+		this.credentials = new BasicAWSCredentials(user, pwd);
 		this.s3client  = AmazonS3ClientBuilder.standard()
 				  .withCredentials(new AWSStaticCredentialsProvider(credentials))
 				  .withRegion(Regions.EU_WEST_1)
@@ -42,9 +44,31 @@ public class AwsService {
 		return s3client;
 	}
 
-	public String uploadImage(String string) {
-		s3client.putObject(new PutObjectRequest("teamx-images", "some-path/some-key.jpg", new File("somePath/someKey.jpg")).withCannedAcl(CannedAccessControlList.PublicRead));
+	public String uploadImage(String pathImmagine) {
+		s3client.putObject(new PutObjectRequest("teamx-images", "some-path/some-key.jpg", new File(pathImmagine)).withCannedAcl(CannedAccessControlList.PublicRead));
 		String urlImage = s3client.getUrl("teamx-images", "some-path/some-key.jpg").toString();
 		return urlImage;
+	}
+	
+	private void setProperties() {
+		try (InputStream input = AwsService.class.getClassLoader().getResourceAsStream("aws.properties")) {
+
+            Properties prop = new Properties();
+
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+
+            //load a properties file from class path, inside static method
+            prop.load(input);
+
+            //get the property value and print it out
+            this.user = prop.getProperty("cloud.aws.credentials.accessKey");
+            this.pwd = prop.getProperty("cloud.aws.credentials.secretKey");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 	}
 }
