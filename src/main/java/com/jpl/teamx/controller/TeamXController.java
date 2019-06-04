@@ -40,12 +40,12 @@ public class TeamXController {
 	}
 
 
-	/* restituisce tutti i team */
+	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model) {
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
-		return "get-teams";
+		return "teams";
 	}
 
 	@GetMapping("/custom-login")
@@ -53,47 +53,47 @@ public class TeamXController {
 		return "login";
 	}
 
-	/* Trova il team con teamId.*/
+	/** Trova il team con teamId.*/
 	@GetMapping("/teams/{teamId}")
-	public String getRestaurant(Model model, @PathVariable Long teamId) {
+	public String getTeam(Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
 		model.addAttribute("team", team);
-		return "get-team";
+		return "team";
 	}
 
-	/* Crea un nuovo team (form). */
+	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "add" })
 	public String getTeamForm(Model model) {
 		model.addAttribute("form", new AddTeamForm());
-		return "add-team-form";
+		return "addTeamForm";
 	}
 
-	/* Crea un nuovo team. */
+	/** Crea un nuovo team. */
 	@PostMapping("/teams")
 	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form) {
 		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation());
 		model.addAttribute("team", team);
-		return "get-team";
+		return "team";
 	}
 
-	/* cancella un team . */
+	/** cancella un team . */
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
 	public String deleteTeam(Model model, @PathVariable Long teamId) {
-		//Team team = teamService.getTeam(teamId);
-		//teamService.deleteTeam(team);
-		model.addAttribute("prova", teamId);
-		return "delete-team";
+		Team team = teamService.getTeam(teamId);
+		teamService.deleteTeam(team);
+		model.addAttribute("team", team);
+		return "teams";
 	}
 
-	/* join in un team */
+	/** join in un team */
 	@GetMapping(value = "/teams/{teamId}", params = { "join" })
 	public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {
 		Team team = teamService.getTeam(teamId);
 		String message = "da modificare";
 		User u = new User("da", "cambiare", "non so come");
 		userService.sendEmail(u, u, message);
-
-		return "join-team";
+		model.addAttribute("team", team);
+		return "team";
 	}
 
 }
