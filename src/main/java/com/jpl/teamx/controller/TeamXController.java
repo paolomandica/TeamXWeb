@@ -40,7 +40,7 @@ public class TeamXController {
 	public String getTeams(Model model) {
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
-		return "uploadForm";
+		return "teams";
 	}
 
 	@GetMapping("/custom-login")
