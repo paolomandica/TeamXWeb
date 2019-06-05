@@ -10,6 +10,7 @@
         <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'" >Team name</p>
         <p class="attribute" th:text="'Description: ' + ${team.description} + '!'" >Team description</p>
         <p class="attribute" th:text="'Location: ' + ${team.location} + '!'" >Team location</p>
+        <img th:src="${team.urlImage}">Team image</img>
         <button id="admin" class="btn">Admin</button>
     </div>
 </body>

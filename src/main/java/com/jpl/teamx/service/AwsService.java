@@ -44,12 +44,6 @@ public class AwsService {
 		return s3client;
 	}
 
-	public String uploadImage(String pathImmagine) {
-		s3client.putObject(new PutObjectRequest("teamx-images", "some-path/some-key.jpg", new File(pathImmagine)).withCannedAcl(CannedAccessControlList.PublicRead));
-		String urlImage = s3client.getUrl("teamx-images", "some-path/some-key.jpg").toString();
-		return urlImage;
-	}
-	
 	private void setProperties() {
 		try (InputStream input = AwsService.class.getClassLoader().getResourceAsStream("aws.properties")) {
 

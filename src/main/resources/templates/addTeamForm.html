@@ -10,7 +10,7 @@
 
 <body>
 	<div id="team-form">
-		<form class="form-group" th:action="@{/teams}" method="post" th:object="${form}">
+		<form class="form-group" th:action="@{/teams}" method="post" th:object="${form}" enctype="multipart/form-data">
 			<div>
 				<label>Name</label>
 				<input class="form-control" type="text" th:field="*{name}" required>
@@ -24,7 +24,10 @@
 				<label>Location</label>
 				<input class="form-control" type="text" th:field="*{location}" required>
 			</div>
-			<!--<input class="btn" type="file" name="image"><br>-->
+			<div>
+				<label>Image</label>
+				<input class="form-control" type="file" name="file">
+			</div>
 			<input class="btn btn-primary" type="submit" id="submit">
 		</form>
 	</div>

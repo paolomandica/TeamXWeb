@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jpl.teamx.form.AddTeamForm;
 import com.jpl.teamx.model.Team;
 import com.jpl.teamx.model.User;
 import com.jpl.teamx.service.AwsService;
+import com.jpl.teamx.service.ImageStorageService;
 import com.jpl.teamx.service.TeamService;
 import com.jpl.teamx.service.UserService;
 
@@ -27,8 +31,8 @@ public class TeamXController {
 	private TeamService teamService;
 	@Autowired
 	private UserService userService;
-	//@Autowired
-	//private AwsService awsService;
+	@Autowired
+	private ImageStorageService imageStorageService;
 
 	@GetMapping("/")
 	public String index() {
@@ -67,10 +71,10 @@ public class TeamXController {
 
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
-	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form) {
-		// String urlImage = awsService.uploadImage("");
-		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(),
-				form.getUrlImage());
+	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form,@RequestParam("file") MultipartFile file) {
+		String urlImage = imageStorageService.storeImage(file,"dacambiare" /*form.getAdmin().getName().toLowerCase()*/ + form.getName().toLowerCase());
+		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(), urlImage);
+
 		model.addAttribute("team", team);
 		return "team";
 	}
