@@ -50,8 +50,10 @@ public class TeamXController {
 
 	/** Trova il team con teamId. */
 	@GetMapping("/teams/{teamId}")
-	public String getTeam(Model model, @PathVariable Long teamId) {
+	public String getTeam(Model model, @PathVariable(name = "teamId") Long teamId) {
 		Team team = teamService.getTeam(teamId);
+		System.out.println("Questo è il nome:");
+		System.out.println(team.getName());
 		model.addAttribute("team", team);
 		return "team";
 	}
@@ -77,14 +79,14 @@ public class TeamXController {
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
 	public String deleteTeam(Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
-		if (team.getAdmin() == new User()) {// da introdurre user corrente
-			teamService.deleteTeam(team);
-			model.addAttribute("message", "team eliminato con successo");
-			return "teams";
-		}
-		model.addAttribute("team", team);
+		//if(team.getAdmin() == new User()) {// da introdurre user corrente
+		teamService.deleteTeam(team);
+		model.addAttribute("message", "team eliminato con successo");
+		return "teams";
+		//}
+		/*model.addAttribute("team", team);
 		model.addAttribute("error", "ci hai provato!!");
-		return "team";
+		return "team";*/
 	}
 
 	/** join in un team */
