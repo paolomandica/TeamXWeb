@@ -25,6 +25,8 @@ public class Team {
 	
 	@Column
 	private String urlImage;
+
+	public Team() {}
 	
 	public Team(User admin, String name, String description, String location,String urlImage) {
 		this.admin = admin;
