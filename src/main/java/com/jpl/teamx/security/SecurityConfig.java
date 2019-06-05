@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-        .antMatchers("/custom-login","/teams","/teams/**").permitAll()
+        .antMatchers("/custom-login","/teams","/teams/**","/index").permitAll()
                 .anyRequest().authenticated()
                 .and().oauth2Login()
                 .loginPage("/custom-login")
