@@ -28,8 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/teams",
                 "/teams/**",
                 "/resources/**")
-                .permitAll()
-                .anyRequest().authenticated()
+                .permitAll().anyRequest().authenticated()
                 .and().oauth2Login()
                 .loginPage("/custom-login")
                 .redirectionEndpoint().baseUri("/")

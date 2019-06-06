@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../static/css/addteam-style.css">
+	<title>Add Team</title>
+</head>
+
+<body>
+	<div id="team-form">
+		<form class="form-group" th:action="@{/teams}" method="post" th:object="${form}" enctype="multipart/form-data">
+			<div>
+				<label>Name</label>
+				<input class="form-control" type="text" th:field="*{name}" required>
+			</div>
+			<div>
+				<label>Description</label>
+				<textarea class="form-control" cols="30" rows="5" 
+					th:field="*{description}"></textarea>
+			</div>
+			<div>
+				<label>Location</label>
+				<input class="form-control" type="text" th:field="*{location}" required>
+			</div>
+			<div>
+				<label>Image</label>
+				<input class="form-control" type="file" name="file">
+			</div>
+			<input class="btn btn-primary" type="submit" id="submit">
+		</form>
+	</div>
+</body>
+
+</html>

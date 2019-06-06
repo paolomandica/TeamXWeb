@@ -23,11 +23,17 @@ public class Team {
 	@Column
 	private String location;
 	
-	public Team(User admin, String name, String description, String location) {
+	@Column
+	private String urlImage;
+
+	public Team() {}
+	
+	public Team(User admin, String name, String description, String location,String urlImage) {
 		this.admin = admin;
 		this.name = name;
 		this.description = description;
 		this.location = location;
+		this.urlImage = urlImage;
 	}
 
 	public User getAdmin() {
@@ -65,4 +71,13 @@ public class Team {
 	public Long getId() {
 		return id;
 	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
+	}
+	
 }

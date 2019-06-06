@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>team</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/team-style.css">
+</head>
+<body>
+    <div id="team" class="center-div container">
+        <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'" >Team name</p>
+        <p class="attribute" th:text="'Description: ' + ${team.description} + '!'" >Team description</p>
+        <p class="attribute" th:text="'Location: ' + ${team.location} + '!'" >Team location</p>
+        <img th:src="${team.urlImage}">Team image</img>
+        <button id="admin" class="btn">Admin</button>
+    </div>
+</body>
+</html>

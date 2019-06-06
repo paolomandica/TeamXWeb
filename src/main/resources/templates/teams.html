@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>teams</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div>
+		<ul>
+			<li th:each="team : ${teams}">
+				<div>
+					<a th:href="'teams/' + ${team.id}" th:text="${team.name}" />
+					<label th:text="${team.description}"></label>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+</body>
+</html>

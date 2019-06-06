@@ -17,8 +17,8 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
     
-    public Team createTeam(User admin, String name, String description, String location) {
-        Team t = new Team(admin, name, description, location);
+    public Team createTeam(User admin, String name, String description, String location, String urlImage) {
+        Team t = new Team(admin, name, description, location,urlImage);
         return teamRepository.save(t);
     }
 
