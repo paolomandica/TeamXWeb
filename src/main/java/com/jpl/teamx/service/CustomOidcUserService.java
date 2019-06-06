@@ -1,6 +1,7 @@
 package com.jpl.teamx.service;
 
 import com.jpl.teamx.model.User;
+import com.jpl.teamx.oauth2.GoogleOAuth2UserInfo;
 import com.jpl.teamx.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -8,6 +9,7 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.Map;
 

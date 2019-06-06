@@ -1,4 +1,4 @@
-package com.jpl.teamx.service;
+package com.jpl.teamx.oauth2;
 
 /*Class used to take info from Google Oauth2 tokens*/
 public class GoogleOAuth2UserInfo {

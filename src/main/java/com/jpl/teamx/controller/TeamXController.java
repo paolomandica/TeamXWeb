@@ -1,14 +1,18 @@
 package com.jpl.teamx.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import com.jpl.teamx.oauth2.GoogleOAuth2UserInfo;
+import org.apache.catalina.connector.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,10 +46,28 @@ public class TeamXController {
 
 	/* restituisce tutti i team */
 	@GetMapping("/teams")
-	public String getTeams(Model model) {
+	public String getTeams(Model model, Principal principal) {
+		if(!model.containsAttribute("currentUser")
+		& !(principal==null)){
+			model.addAttribute("currentUser",
+					this.getUserFromPrincipal(principal));
+		}
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "get-teams";
+	}
+
+	private User getUserFromPrincipal(Principal principal){
+		OidcUser oidcUser = (OidcUser) principal;
+		Map attributes = oidcUser.getAttributes();
+		//TODO: se non trova l'user throw Exception
+		//String email = (String) attributes.get("email");
+		//User user = userService.getUserByEmail(email);
+		User user = new User();
+        user.setEmail((String) attributes.get("email"));
+        user.setImageUrl((String) attributes.get("picture"));
+        user.setName((String) attributes.get("name"));
+		return user;
 	}
 
 	@GetMapping("/custom-login")
