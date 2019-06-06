@@ -4,12 +4,19 @@ package com.jpl.teamx.form;
 
 import com.jpl.teamx.model.User;
 
+import javax.validation.constraints.Size;
+
 public class AddTeamForm {
+
 	private User admin;
+
+	@Size(min = 3, max = 25)
 	private String name;
-	
+
+	@Size(max = 255)
 	private String description;
-	
+
+	@Size(max = 50)
 	private String location;
 	
 	private String urlImage;

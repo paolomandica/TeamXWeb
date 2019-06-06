@@ -1,40 +1,25 @@
 package com.jpl.teamx.controller;
 
+import com.jpl.teamx.form.AddTeamForm;
+import com.jpl.teamx.model.Team;
+import com.jpl.teamx.model.User;
+import com.jpl.teamx.service.ImageStorageService;
+import com.jpl.teamx.service.TeamService;
+import com.jpl.teamx.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-import com.jpl.teamx.oauth2.GoogleOAuth2UserInfo;
-import org.apache.catalina.connector.Request;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-
 //import org.h2.store.PageInputStream;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.jpl.teamx.form.AddTeamForm;
-import com.jpl.teamx.model.Team;
-import com.jpl.teamx.model.User;
-import com.jpl.teamx.service.AwsService;
-import com.jpl.teamx.service.ImageStorageService;
-import com.jpl.teamx.service.TeamService;
-import com.jpl.teamx.service.UserService;
 
 @Controller
 public class TeamXController {
@@ -100,12 +85,22 @@ public class TeamXController {
 
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
-	public String addTeam(Model model, @ModelAttribute("form") AddTeamForm form,@RequestParam("file") MultipartFile file) {
-		String urlImage = imageStorageService.storeImage(file,"dacambiare" /*form.getAdmin().getName().toLowerCase()*/ + form.getName().toLowerCase());
-		Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(), urlImage);
+	public String addTeam(Model model, @ModelAttribute("form") @Valid AddTeamForm form,
+						  BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
 
-		model.addAttribute("team", team);
-		return "team";
+		if(!bindingResult.hasErrors()) {
+			String urlImage = null;
+
+			if(!file.isEmpty()) {
+				urlImage = imageStorageService.storeImage(file, "dacambiare" /*form.getAdmin().getName().toLowerCase()*/ + form.getName().toLowerCase());
+			}
+
+			Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(), urlImage);
+			model.addAttribute("team", team);
+
+			return "team";
+		} else
+			return "addTeamForm";
 	}
 
 	/** cancella un team . */
