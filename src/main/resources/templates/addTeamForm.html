@@ -27,7 +27,7 @@
         <p class="error" th:errors="*{location}" th:if="${#fields.hasErrors('location')}"></p>
         <br>
 
-        <label>Image</label>
+        <label>Image (max size is 5 Megabytes)</label>
         <input class="form-control" type="file" name="file">
         <br>
 

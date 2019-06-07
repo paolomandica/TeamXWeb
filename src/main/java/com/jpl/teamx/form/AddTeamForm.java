@@ -25,12 +25,11 @@ public class AddTeamForm {
 		
 	}
 	
-	public AddTeamForm(User admin, String name, String description, String location, String urlImage) {
+	public AddTeamForm(User admin, String name, String description, String location) {
 		this.admin = admin;
 		this.name = name;
 		this.description = description;
 		this.location = location;
-		this.urlImage = urlImage;
 	}
 
 	public User getAdmin() {
@@ -65,15 +64,6 @@ public class AddTeamForm {
 		this.location = location;
 	}
 
-	public String getUrlImage() {
-		return urlImage;
-	}
 
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
-	}
-	
-
-	
 
 }

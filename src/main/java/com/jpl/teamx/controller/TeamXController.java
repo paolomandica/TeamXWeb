@@ -38,26 +38,24 @@ public class TeamXController {
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model, Principal principal) {
-		if(!model.containsAttribute("currentUser")
-		& !(principal==null)){
-			model.addAttribute("currentUser",
-					this.getUserFromPrincipal(principal));
+		if (!model.containsAttribute("currentUser") & !(principal == null)) {
+			model.addAttribute("currentUser", this.getUserFromPrincipal(principal));
 		}
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "teams";
 	}
 
-	private User getUserFromPrincipal(Principal principal){
+	private User getUserFromPrincipal(Principal principal) {
 		OidcUser oidcUser = (OidcUser) principal;
 		Map attributes = oidcUser.getAttributes();
-		//TODO: se non trova l'user throw Exception
-		//String email = (String) attributes.get("email");
-		//User user = userService.getUserByEmail(email);
+		// TODO: se non trova l'user throw Exception
+		// String email = (String) attributes.get("email");
+		// User user = userService.getUserByEmail(email);
 		User user = new User();
-        user.setEmail((String) attributes.get("email"));
-        user.setImageUrl((String) attributes.get("picture"));
-        user.setName((String) attributes.get("name"));
+		user.setEmail((String) attributes.get("email"));
+		user.setImageUrl((String) attributes.get("picture"));
+		user.setName((String) attributes.get("name"));
 		return user;
 	}
 
@@ -85,17 +83,15 @@ public class TeamXController {
 
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
-	public String addTeam(Model model, @ModelAttribute("form") @Valid AddTeamForm form,
-						  BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
+	public String addTeam(Model model, @ModelAttribute("form") @Valid AddTeamForm form, BindingResult bindingResult,
+			@RequestParam("file") MultipartFile file) {
 
-		if(!bindingResult.hasErrors()) {
-			String urlImage = null;
+		if (!bindingResult.hasErrors() && !file.isEmpty()) {
+			String urlImage = imageStorageService.storeImage(file,
+					"dacambiare" /* form.getAdmin().getName().toLowerCase() */ + form.getName().toLowerCase());
 
-			if(!file.isEmpty()) {
-				urlImage = imageStorageService.storeImage(file, "dacambiare" /*form.getAdmin().getName().toLowerCase()*/ + form.getName().toLowerCase());
-			}
-
-			Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(), form.getLocation(), urlImage);
+			Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(),
+					form.getLocation(), urlImage);
 			model.addAttribute("team", team);
 
 			return "team";
@@ -107,14 +103,15 @@ public class TeamXController {
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
 	public String deleteTeam(Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
-		//if(team.getAdmin() == new User()) {// da introdurre user corrente
+		// if(team.getAdmin() == new User()) {// da introdurre user corrente
 		teamService.deleteTeam(team);
 		model.addAttribute("message", "team eliminato con successo");
 		return "teams";
-		//}
-		/*model.addAttribute("team", team);
-		model.addAttribute("error", "ci hai provato!!");
-		return "team";*/
+		// }
+		/*
+		 * model.addAttribute("team", team); model.addAttribute("error",
+		 * "ci hai provato!!"); return "team";
+		 */
 	}
 
 	/** join in un team */
@@ -128,9 +125,5 @@ public class TeamXController {
 		model.addAttribute("message", "richiesta inviata con successo");
 		return "team";
 	}
-	
-	
-
-	
 
 }
