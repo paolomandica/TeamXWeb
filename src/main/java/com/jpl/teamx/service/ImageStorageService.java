@@ -39,7 +39,7 @@ public class ImageStorageService {
 			//store s3 file
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentType("image");
-			s3client.putObject(new PutObjectRequest(BUCKET_NAME, s3ObjectKey, is,metadata).withCannedAcl(CannedAccessControlList.PublicRead));
+			s3client.putObject(new PutObjectRequest(BUCKET_NAME, s3ObjectKey.trim(), is,metadata).withCannedAcl(CannedAccessControlList.PublicRead));
 			S3Object s3Object = s3client.getObject(new GetObjectRequest(BUCKET_NAME,s3ObjectKey));
 			String picUrl = s3Object.getObjectContent().getHttpRequest().getURI().toString();  
 			return picUrl;

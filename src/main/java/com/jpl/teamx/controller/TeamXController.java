@@ -6,14 +6,19 @@ import com.jpl.teamx.model.User;
 import com.jpl.teamx.service.ImageStorageService;
 import com.jpl.teamx.service.TeamService;
 import com.jpl.teamx.service.UserService;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.Map;
 //import org.h2.store.PageInputStream;
 
 @Controller
+@ControllerAdvice
 public class TeamXController {
 	@Autowired
 	private TeamService teamService;
@@ -125,5 +131,16 @@ public class TeamXController {
 		model.addAttribute("message", "richiesta inviata con successo");
 		return "team";
 	}
+	
+
+	@ExceptionHandler(MultipartException.class)
+	@ResponseBody
+	public ModelAndView handleFileException(HttpServletRequest request, Throwable ex) {
+	    //return your json insted this string.
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("url", request.getRequestURL());
+	    //mav.setViewName("errorPage");
+	    return mav;
+	  }
 
 }
