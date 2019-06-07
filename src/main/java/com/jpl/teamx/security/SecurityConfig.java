@@ -27,12 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/custom-login",
                 "/teams",
                 "/teams/**",
-                "/resources/**")
-                .permitAll().anyRequest().authenticated()
+                "/resources/**",
+                "/css/**")
+                .permitAll();/*.anyRequest().authenticated()
                 .and().oauth2Login()
                 .loginPage("/custom-login")
                 .redirectionEndpoint().baseUri("/")
-                .and().userInfoEndpoint().oidcUserService(oidcUserService);
+                .and().userInfoEndpoint().oidcUserService(oidcUserService);*/
                 //.and()
                 //.successHandler(customAuthenticationSuccessHandler)
 
