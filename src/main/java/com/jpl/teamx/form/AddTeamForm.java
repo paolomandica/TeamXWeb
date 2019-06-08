@@ -5,6 +5,7 @@ package com.jpl.teamx.form;
 import com.jpl.teamx.model.User;
 
 public class AddTeamForm {
+
 	private User admin;
 	private String name;
 	

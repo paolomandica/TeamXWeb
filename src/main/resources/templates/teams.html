@@ -10,11 +10,12 @@
 			<li th:each="team : ${teams}">
 				<div>
 					<a th:href="'teams/' + ${team.id}" th:text="${team.name}" />
-					<label th:text="${team.description}"></label>
-				</div>
-			</li>
-		</ul>
-	</div>
+					<label th:text="${team.description}"></label><br>
+					<!--<label th:text="${currentUser.name}"></label><br>-->
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
-</body>
-</html>
+                    </body>
+                    </html>

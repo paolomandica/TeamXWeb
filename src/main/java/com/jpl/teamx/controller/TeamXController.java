@@ -67,12 +67,8 @@ public class TeamXController {
 		OidcUser oidcUser = (OidcUser) principal;
 		Map attributes = oidcUser.getAttributes();
 		//TODO: se non trova l'user throw Exception
-		//String email = (String) attributes.get("email");
-		//User user = userService.getUserByEmail(email);
-		User user = new User();
-        user.setEmail((String) attributes.get("email"));
-        user.setImageUrl((String) attributes.get("picture"));
-        user.setName((String) attributes.get("name"));
+		String email = (String) attributes.get("email");
+		User user = userService.getUserByEmail(email);
 		return user;
 	}
 
