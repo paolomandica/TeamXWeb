@@ -14,13 +14,13 @@ public class Team {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User admin;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 25)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column
 	private String description;
 	
-	@Column
+	@Column(length = 50)
 	private String location;
 	
 	@Column

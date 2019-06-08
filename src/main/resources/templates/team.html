@@ -3,7 +3,7 @@
 <head>
     <title>team</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../static/css/team-style.css">
+    <link rel="stylesheet" href="/resources/static/css/team-style.css">
 </head>
 <body>
     <div id="team" class="center-div container">
@@ -12,6 +12,7 @@
         <p class="attribute" th:text="'Location: ' + ${team.location} + '!'" >Team location</p>
         <img th:src="${team.urlImage}">Team image</img>
         <button id="admin" class="btn">Admin</button>
+        <input type="button" onclick="location.href='localhost:8080/teams';" value="Go to Google" />
     </div>
 </body>
 </html>

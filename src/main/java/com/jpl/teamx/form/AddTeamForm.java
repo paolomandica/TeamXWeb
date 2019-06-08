@@ -4,13 +4,19 @@ package com.jpl.teamx.form;
 
 import com.jpl.teamx.model.User;
 
+import javax.validation.constraints.Size;
+
 public class AddTeamForm {
 
 	private User admin;
+
+	@Size(min = 3, max = 25)
 	private String name;
-	
+
+	@Size(max = 255)
 	private String description;
-	
+
+	@Size(max = 50)
 	private String location;
 	
 	private String urlImage;
@@ -19,12 +25,11 @@ public class AddTeamForm {
 		
 	}
 	
-	public AddTeamForm(User admin, String name, String description, String location, String urlImage) {
+	public AddTeamForm(User admin, String name, String description, String location) {
 		this.admin = admin;
 		this.name = name;
 		this.description = description;
 		this.location = location;
-		this.urlImage = urlImage;
 	}
 
 	public User getAdmin() {
@@ -59,15 +64,6 @@ public class AddTeamForm {
 		this.location = location;
 	}
 
-	public String getUrlImage() {
-		return urlImage;
-	}
 
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
-	}
-	
-
-	
 
 }

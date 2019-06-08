@@ -9,3 +9,7 @@ body {
 #submit {
     margin: 10px 0;
 }
+
+.error {
+    color: red;
+}
