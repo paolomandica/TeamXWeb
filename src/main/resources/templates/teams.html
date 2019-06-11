@@ -1,29 +1,28 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>teams</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<title>teams</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 	<div>
 		<ul>
 			<li th:each="team : ${teams}">
 				<div>
-					<a th:href="'teams/' + ${team.id}" th:text="${team.name}" />
-					<label th:text="${team.description}"></label><br>
+					<a th:href="'teams/' + ${team.id}" th:text="${team.name}" /> <label
+						th:text="${team.description}"></label><br>
 					<!--<label th:text="${currentUser.name}"></label><br>-->
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-					<label th:text="${team.description}"></label>
 				</div>
 			</li>
 		</ul>
 	</div>
+	<!--  <label th:text="${team.description}"></label>-->
+	</div>
+	</li>
+	</ul>
+	</div>
 	<a class="btn btn-primary" href="/teams?add">Inserisci team</a>
->>>>>>> feb42bf73adfd352bc39ba5a8b6024ce8af23484
 
-                    </body>
-                    </html>
+</body>
+</html>

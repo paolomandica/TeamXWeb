@@ -12,7 +12,7 @@
         <p class="attribute" th:text="'Location: ' + ${team.location} + '!'" >Team location</p>
         <img th:src="${team.urlImage}">Team image</img>
         <button id="admin" class="btn">Admin</button>
-        <input type="button" onclick="location.href='localhost:8080/teams';" value="Go to Google" />
+        <a class="btn btn-primary" th:href="@{/teams/{id}?delete(id=${team.id})}">Elimina team</a>
     </div>
 </body>
 </html>
