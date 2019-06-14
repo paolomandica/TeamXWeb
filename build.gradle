@@ -23,7 +23,7 @@ dependencies {
 	
 	implementation 'io.jsonwebtoken:jjwt:0.9.0'
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	//runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	compile 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.1.5.RELEASE'
