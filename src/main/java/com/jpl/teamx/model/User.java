@@ -1,5 +1,8 @@
 package com.jpl.teamx.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,31 +10,39 @@ import java.util.List;
 @Table(name = "Users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column
-    private String imageUrl;
+    private String pictureUrl;
+    @Column
+    private String profileUrl;
+
     @OneToMany(mappedBy = "admin",
     cascade = {CascadeType.PERSIST,
             CascadeType.REMOVE})
     private List<Team> createdTeams;
-    
-    public User(){}
-    
-    public User(String name,
-                String email,
-                String imageUrl) {
+
+    public User() {
+    }
+
+    @JsonCreator
+    public User(@JsonProperty("id") String id,
+                @JsonProperty("name") String name,
+                @JsonProperty("email") String email,
+                @JsonProperty("picture") String picture,
+                @JsonProperty("profile") String profile) {
+        this.id = id;
         this.name = name;
+        this.pictureUrl = picture;
         this.email = email;
-        this.imageUrl = imageUrl;
+        this.profileUrl = profile;
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -56,12 +67,20 @@ public class User {
         this.email = email;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPictureUrl(String imageUrl) {
+        this.pictureUrl = imageUrl;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
     public List<Team> getCreatedTeams() {

@@ -7,8 +7,11 @@ import com.jpl.teamx.service.ImageStorageService;
 import com.jpl.teamx.service.TeamService;
 import com.jpl.teamx.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -36,34 +40,15 @@ public class TeamXController {
 	@Autowired
 	private ImageStorageService imageStorageService;
 
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}
-
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
-	public String getTeams(Model model, Principal principal) {
-		if (!model.containsAttribute("currentUser") & !(principal == null)) {
-			model.addAttribute("currentUser", this.getUserFromPrincipal(principal));
-		}
+	public String getTeams(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("user",user);
+		userService.createUser(user);
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "teams";
-	}
-
-	private User getUserFromPrincipal(Principal principal) {
-		OidcUser oidcUser = (OidcUser) principal;
-		Map attributes = oidcUser.getAttributes();
-		//TODO: se non trova l'user throw Exception
-		String email = (String) attributes.get("email");
-		User user = userService.getUserByEmail(email);
-		return user;
-	}
-
-	@GetMapping("/custom-login")
-	public String loadLogin() {
-		return "login";
 	}
 
 	/** Trova il team con teamId. */
@@ -78,7 +63,9 @@ public class TeamXController {
 
 	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "add" })
-	public String getTeamForm(Model model) {
+	public String getTeamForm(@ModelAttribute User user, Model model) {
+		AddTeamForm form = new AddTeamForm();
+		form.setAdmin(user);
 		model.addAttribute("form", new AddTeamForm());
 		return "addTeamForm";
 	}
@@ -88,14 +75,16 @@ public class TeamXController {
 	public String addTeam(Model model, @ModelAttribute("form") @Valid AddTeamForm form, BindingResult bindingResult,
 			@RequestParam("file") MultipartFile file) {
 
-		if (!bindingResult.hasErrors() && !file.isEmpty()) {
-			String urlImage = imageStorageService.storeImage(file,
-					"dacambiare" /* form.getAdmin().getName().toLowerCase() */ + form.getName().toLowerCase());
-
-			Team team = teamService.createTeam(form.getAdmin(), form.getName(), form.getDescription(),
-					form.getLocation(), urlImage);
+		if (!bindingResult.hasErrors()) {
+			String urlImage = null;
+			if(!file.isEmpty()) {
+				urlImage = imageStorageService.storeImage(file,
+						form.getAdmin().getName().toLowerCase()
+								+ form.getName().toLowerCase());
+			}
+			Team team = teamService.createTeam(form.getAdmin(), form.getName(),
+					form.getDescription(),form.getLocation(), urlImage);
 			model.addAttribute("team", team);
-
 			return "team";
 		} else
 			return "addTeamForm";
@@ -121,8 +110,9 @@ public class TeamXController {
 	public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {
 		Team team = teamService.getTeam(teamId);
 		String message = "da modificare";
-		User u = new User("da", "cambiare", "non so come");
-		userService.sendEmail(u, u, message);
+		//TODO: send email
+		//User u = new User("da", "cambiare", "non so come");
+		//userService.sendEmail(u, u, message);
 		model.addAttribute("team", team);
 		model.addAttribute("message", "richiesta inviata con successo");
 		return "team";

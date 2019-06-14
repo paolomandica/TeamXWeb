@@ -14,10 +14,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createUser(String fullName,
-                           String email,
-                           String imageUrl){
-        User user = new User(fullName, email, imageUrl);
+    public User createUser(User user){
         return userRepository.save(user);
     }
 
@@ -25,7 +22,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User getUser(Long id){
+    public User getUser(String id){
         return userRepository.findById(id)
                 .orElse(null);
     }
