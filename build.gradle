@@ -26,7 +26,7 @@ dependencies {
 	implementation 'com.amazonaws:aws-java-sdk-s3'
 
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	//runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	compile 'org.postgresql:postgresql'
 	implementation 'org.springframework.security:spring-security-jwt'
 	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
