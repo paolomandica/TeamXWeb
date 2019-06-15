@@ -1,28 +1,42 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<title>teams</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/_teams-style.css}">
+    <title>Teams</title>
 </head>
+<style>
+    h1 {
+        text-align: center;
+    }
+</style>
+
 <body>
-<header>
-    <h1>Home Page</h1>
-    Hello <span  th:text="${session.user.name}">user</span>
-</header>
-
-	<div>
-		<ul>
-			<li th:each="team : ${teams}">
-				<div>
-					<a th:href="'teams/' + ${team.id}" th:text="${team.name}" /> <label
-						th:text="${team.description}"></label><br>
-				</div>
-			</li>
-		</ul>
-	</div>
-	<a class="btn btn-primary" href="/teams?add">Inserisci team</a>
+    <h1>Teams</h1>
+    Hello <span th:text="${session.user.name}">user</span>
+    <a class="btn btn-primary" href="/teams?add">Inserisci team</a>
 	<a class="btn btn-dark" href="/user">Profile</a>
-
+    <div class="productlist">
+        <li th:each="team: ${teams}">
+            <div class="product">
+                <h2><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h2>
+                <div class="image">
+                    <img alt="Team Image" th:src="${team.urlImage}"></div>
+                <div class="inventory">
+                    <p th:text="${team.description}"></p>
+                </div>
+                <div class="cost">
+                    <p></p>
+                </div>
+                <div class="cart">
+                    <form th:action="@{/teams/{teamId}?join(teamId=${team.id})}" method='POST'>
+                        <input type="submit" value="Join Team">
+                    </form>
+                </div>
+            </div>
+        </li>
+    </div>
+    
 </body>
-</html>
