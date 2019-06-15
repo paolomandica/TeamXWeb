@@ -8,11 +8,9 @@ import com.jpl.teamx.service.TeamService;
 import com.jpl.teamx.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +19,6 @@ import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -97,7 +93,7 @@ public class TeamXController {
 		// if(team.getAdmin() == new User()) {// da introdurre user corrente
 		teamService.deleteTeam(team);
 		model.addAttribute("message", "team eliminato con successo");
-		return "teams";
+		return "redirect:/teams";
 		// }
 		/*
 		 * model.addAttribute("team", team); model.addAttribute("error",
