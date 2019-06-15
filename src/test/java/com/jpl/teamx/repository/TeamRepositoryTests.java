@@ -27,7 +27,7 @@ public class TeamRepositoryTests {
 
     @Before
     public void setUp() {
-        admin = new User("paolo","paolo@prova.com","testurl");
+        admin = new User("paolo","paolo@prova.com","testurl", null, null);
         team1 = new Team(admin,"prova","prova desc", "prova loc","");
         team2 = new Team(admin, "prova2", "prova desc 2", "prova loc 2","") ;
         teamRepository.save(team1);
