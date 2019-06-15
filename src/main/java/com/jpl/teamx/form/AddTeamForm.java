@@ -8,8 +8,6 @@ import javax.validation.constraints.Size;
 
 public class AddTeamForm {
 
-	private User admin;
-
 	@Size(min = 3, max = 25)
 	private String name;
 
@@ -24,19 +22,10 @@ public class AddTeamForm {
 		
 	}
 	
-	public AddTeamForm(User admin, String name, String description, String location) {
-		this.admin = admin;
+	public AddTeamForm(String name, String description, String location) {
 		this.name = name;
 		this.description = description;
 		this.location = location;
-	}
-
-	public User getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(User admin) {
-		this.admin = admin;
 	}
 
 	public String getName() {

@@ -63,30 +63,30 @@ public class TeamXController {
 	
 	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "add" })
-	public String getTeamForm(HttpSession session, Model model) {
-		User user = (User) session.getAttribute("user");
+	public String getTeamForm(Model model) {
 		AddTeamForm form = new AddTeamForm();
-		form.setAdmin(user);
-		model.addAttribute("form", new AddTeamForm());
+		model.addAttribute("form", form);
 		return "addTeamForm";
 	}
 
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
-	public String addTeam(Model model, @ModelAttribute("form") @Valid AddTeamForm form, BindingResult bindingResult,
+	public String addTeam(HttpSession session, Model model, @ModelAttribute("form") @Valid AddTeamForm form, BindingResult bindingResult,
 			@RequestParam("file") MultipartFile file) {
+
+		User user = (User) session.getAttribute("user");
 
 		if (!bindingResult.hasErrors()) {
 			String urlImage = null;
 			if(!file.isEmpty()) {
 				urlImage = imageStorageService.storeImage(file,
-						form.getAdmin().getName().toLowerCase()
+						user.getName().toLowerCase()
 								+ form.getName().toLowerCase());
 			}
-			Team team = teamService.createTeam(form.getAdmin(), form.getName(),
+			Team team = teamService.createTeam(user, form.getName(),
 					form.getDescription(),form.getLocation(), urlImage);
-			//model.addAttribute("team", team);
-			return "redirect:/teams/"+team.getId();
+			model.addAttribute("user", user);
+			return "redirect:/teams/"+team.getId().toString();
 		} else
 			return "addTeamForm";
 	}
