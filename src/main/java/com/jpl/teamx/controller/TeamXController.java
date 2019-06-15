@@ -41,7 +41,6 @@ public class TeamXController {
 	public String getTeams(Model model, HttpSession session) {
 		if(session.getAttribute("user")==null){
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			model.addAttribute("user",user);
 			userService.createUser(user);
 			session.setAttribute("user",user);
 		}
