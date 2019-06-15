@@ -36,6 +36,14 @@ public class TeamXController {
 	@Autowired
 	private ImageStorageService imageStorageService;
 
+	@GetMapping("/user")
+	public String getUserPage(HttpSession session){
+		if(session.getAttribute("user")==null){
+			return "redirect:/";
+		}
+		return "user";
+	}
+
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model, HttpSession session) {
