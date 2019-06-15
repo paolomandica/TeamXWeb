@@ -19,7 +19,6 @@ public class AddTeamForm {
 	@Size(max = 50)
 	private String location;
 	
-	private String urlImage;
 	
 	public AddTeamForm() {
 		

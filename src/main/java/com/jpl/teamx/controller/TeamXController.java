@@ -9,7 +9,6 @@ import com.jpl.teamx.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
+
 import java.util.List;
-import java.util.Map;
+
 
 //import org.h2.store.PageInputStream;
 
@@ -57,12 +56,11 @@ public class TeamXController {
 	@GetMapping("/teams/{teamId}")
 	public String getTeam(Model model, @PathVariable(name = "teamId") Long teamId) {
 		Team team = teamService.getTeam(teamId);
-		System.out.println("Questo è il nome:");
-		System.out.println(team.getName());
 		model.addAttribute("team", team);
 		return "team";
 	}
 
+	
 	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "add" })
 	public String getTeamForm(HttpSession session, Model model) {
@@ -87,8 +85,8 @@ public class TeamXController {
 			}
 			Team team = teamService.createTeam(form.getAdmin(), form.getName(),
 					form.getDescription(),form.getLocation(), urlImage);
-			model.addAttribute("team", team);
-			return "team";
+			//model.addAttribute("team", team);
+			return "redirect:/teams/"+team.getId();
 		} else
 			return "addTeamForm";
 	}
