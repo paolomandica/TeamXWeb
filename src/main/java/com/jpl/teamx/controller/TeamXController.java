@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -38,14 +39,19 @@ public class TeamXController {
 
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
-	public String getTeams(Model model) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("user",user);
-		userService.createUser(user);
+	public String getTeams(Model model, HttpSession session) {
+		if(session.getAttribute("user")==null){
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			model.addAttribute("user",user);
+			userService.createUser(user);
+			session.setAttribute("user",user);
+		}
+
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "teams";
 	}
+
 
 	/** Trova il team con teamId. */
 	@GetMapping("/teams/{teamId}")
@@ -59,7 +65,8 @@ public class TeamXController {
 
 	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "add" })
-	public String getTeamForm(@ModelAttribute User user, Model model) {
+	public String getTeamForm(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
 		AddTeamForm form = new AddTeamForm();
 		form.setAdmin(user);
 		model.addAttribute("form", new AddTeamForm());

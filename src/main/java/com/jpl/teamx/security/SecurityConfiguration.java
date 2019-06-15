@@ -1,14 +1,19 @@
 package com.jpl.teamx.security;
 
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+
+import java.util.EnumSet;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -32,8 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public OAuth2ClientContextFilter oAuth2ClientContextFilter() {
         return new OAuth2ClientContextFilter();
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
+        // Login mnanagement
         http.addFilterAfter(oAuth2ClientContextFilter(), AbstractPreAuthenticatedProcessingFilter.class)
                 .addFilterAfter(openIdConnectAuthenticationFilter(), OAuth2ClientContextFilter.class)
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
@@ -41,7 +50,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers(GET,"/",  "/login").permitAll()
                 .antMatchers(GET, "/teams","/teams/**").authenticated()
-                .antMatchers(POST, "/teams","/teams/**").authenticated();
+                .antMatchers(POST, "/teams","/teams/**").authenticated()
+                // SESSION CONFIGURATION
+                .and()
+                .sessionManagement()
+                .sessionFixation().migrateSession()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .invalidSessionUrl("/")
+                .maximumSessions(2)
+                .expiredUrl("/");
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+
+        return new HttpSessionEventPublisher();
     }
 
 
