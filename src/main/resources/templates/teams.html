@@ -11,6 +11,9 @@
     h1 {
         text-align: center;
     }
+    h3 {
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -21,14 +24,17 @@
     <div class="productlist">
         <li th:each="team: ${teams}">
             <div class="product">
-                <h2><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h2>
+                <h3><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h3>
                 <div class="image">
-                    <img alt="Team Image" th:src="${team.urlImage}"></div>
+                    <img th:if="${team.urlImage != null}" alt="Team Image" th:src="${team.urlImage}">
+                    <span th:unless="${team.urlImage != null}"></span>
+                </div>
+
                 <div class="inventory">
-                    <p th:text="${team.description}"></p>
+                    <h2 th:text="${team.description}"></h2>
                 </div>
                 <div class="cost">
-                    <p></p>
+                    <p th:text="${team.location}"></p>
                 </div>
                 <div class="cart">
                     <form th:action="@{/teams/{teamId}?join(teamId=${team.id})}" method='POST'>

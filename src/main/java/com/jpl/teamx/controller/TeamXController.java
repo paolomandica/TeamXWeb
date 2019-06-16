@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -88,7 +89,7 @@ public class TeamXController {
 			if(!file.isEmpty()) {
 				urlImage = imageStorageService.storeImage(file,
 						user.getName().toLowerCase()
-								+ form.getName().toLowerCase());
+								+ form.getName().toLowerCase()+LocalDate.now().toString().toLowerCase());
 			}
 			Team team = teamService.createTeam(user, form.getName(),
 					form.getDescription(),form.getLocation(), urlImage);
