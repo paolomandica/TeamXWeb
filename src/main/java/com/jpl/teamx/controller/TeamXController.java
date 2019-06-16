@@ -38,10 +38,13 @@ public class TeamXController {
 	private ImageStorageService imageStorageService;
 
 	@GetMapping("/user")
-	public String getUserPage(HttpSession session){
-		if(session.getAttribute("user")==null){
+	public String getUserPage(Model model, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		if(user==null){
 			return "redirect:/";
 		}
+		//Refreshing user informations
+		model.addAttribute("user", userService.getUser(user.getId()));
 		return "user";
 	}
 
