@@ -11,7 +11,7 @@ public class AddTeamForm {
 	@Size(min = 3, max = 25)
 	private String name;
 
-	@Size(max = 255)
+	@Size(min = 15, max = 255)
 	private String description;
 
 	@Size(max = 50)

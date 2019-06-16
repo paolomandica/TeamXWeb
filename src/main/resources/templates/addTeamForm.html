@@ -155,8 +155,7 @@
                                         th:field="*{name}" required />
                                     <span class="error" th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
                                     <br>
-                                    <input type="text" class="form-control" placeholder="Location" 
-                                    th:field="*{location}" required/>
+                                    <input type="text" class="form-control" placeholder="Location" th:field="*{location}"/>
                                     <span class="error" th:errors="*{location}" th:if="${#fields.hasErrors('location')}"></span>
                                     <br>
                                     <div class="custom-file">
@@ -167,8 +166,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <textarea name="Description" id="desc" cols="30" rows="3" placeholder="Description"
-                                    class="form-control" th:field="*{description}" ></textarea>
+                                <textarea name="Description" id="desc" cols="30" rows="3" placeholder="Description *"
+                                    class="form-control" th:field="*{description}" required></textarea>
                                     <span class="error" th:errors="*{description}" th:if="${#fields.hasErrors('description')}"></span>
                                 <input type="submit" class="btnRegister" value="Create Team" />
                             </div>

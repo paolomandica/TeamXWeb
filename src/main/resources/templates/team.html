@@ -4,15 +4,69 @@
 <head>
     <title>team</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/static/css/team-style.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style th:inline="text">
+        body {
+            background: -webkit-linear-gradient(left, #3931af, #00c6ff);;
+            color: white;
+            width: 100vh;
+        }
+
+        .center-div {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        #team {
+            margin: auto;
+            border-radius: 75px;
+            width: 90vh;
+            height: 90vh;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .attribute {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+
+        #admin {
+            margin-left: 10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: none;
+            background-color: #00EA75;
+            cursor: pointer;
+            border-bottom-style: groove;
+            border-left-style: inset;
+            border-width: 5px;
+            border-color: rgb(1, 114, 58);
+        }
+
+        #team-img {
+            width: 100%;
+            height: 40%;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
 </head>
 
 <body>
     <div id="team" class="center-div container">
-        <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'">Team name</p>
+        <div id="team-img">
+            <!--th:src="${team.urlImage}"-->
+            <!--<img src="https://images.unsplash.com/photo-1560635041-160852985094">-->
+            <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'">Team name</p>
+        </div>
         <p class="attribute" th:text="'Description: ' + ${team.description} + '!'">Team description</p>
         <p class="attribute" th:text="'Location: ' + ${team.location} + '!'">Team location</p>
-        <img th:src="${team.urlImage}" width="400" height="300"> </img>
         <form th:action="@{/users/{id}(id=${team.admin.id})}" method="get">
             <button id="admin" class="btn" th:href="@{/users/{id}(id=${team.admin.id})}">Admin</button>
         </form>
