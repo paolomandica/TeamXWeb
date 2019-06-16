@@ -45,6 +45,17 @@ public class TeamXController {
 		return "user";
 	}
 
+	
+	/** Trova  user con userId. */
+	@GetMapping("/users/{userId}")
+	public String getUser(Model model, @PathVariable(name = "userId") String userId) {
+		if(userId==null || userService.getUser(userId)==null)
+			return "redirect:/";
+		User user = userService.getUser(userId);
+		model.addAttribute("user", user);
+		return "user";
+	}
+
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model, HttpSession session) {
@@ -126,6 +137,7 @@ public class TeamXController {
 		model.addAttribute("message", "richiesta inviata con successo");
 		return "team";
 	}
+
 	
 
 	@ExceptionHandler(MultipartException.class)
