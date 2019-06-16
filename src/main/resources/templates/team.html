@@ -1,18 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>team</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/static/css/team-style.css">
 </head>
+
 <body>
     <div id="team" class="center-div container">
-        <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'" >Team name</p>
-        <p class="attribute" th:text="'Description: ' + ${team.description} + '!'" >Team description</p>
-        <p class="attribute" th:text="'Location: ' + ${team.location} + '!'" >Team location</p>
-        <img th:src="${team.urlImage}">Team image</img>
-        <button id="admin" class="btn">Admin</button>
-
+        <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'">Team name</p>
+        <p class="attribute" th:text="'Description: ' + ${team.description} + '!'">Team description</p>
+        <p class="attribute" th:text="'Location: ' + ${team.location} + '!'">Team location</p>
+        <img th:src="${team.urlImage}" width="400" height="300"> </img>
+        <form th:action="@{/users/{id}(id=${team.admin.id})}" method="get">
+            <button id="admin" class="btn" th:href="@{/users/{id}(id=${team.admin.id})}">Admin</button>
+        </form>
         <div th:if="${team.admin.id}==${session.user.id}">
             <a class="btn btn-primary" th:href="@{/teams/{id}?delete(id=${team.id})}">Elimina team</a>
         </div>
@@ -21,4 +24,5 @@
 
     </div>
 </body>
+
 </html>
