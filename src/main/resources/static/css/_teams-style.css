@@ -109,7 +109,7 @@
     height: auto;
     border-radius: 3px 3px 0 0;
     box-sizing:border-box;
-    box-shadow: 0 2px 5px 1px rgba(0,0,0,0.4);
+    /*box-shadow: 0 2px 5px 1px rgba(0,0,0,0.4);*/
   }
   form{
     margin: auto; 
