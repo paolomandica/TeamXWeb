@@ -324,6 +324,8 @@
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" href="/teams">TeamX </a>
+            <a class="navbar-brand" href="/teams?add">Create</a>
+            <a class="navbar-brand" href="/user">Profile </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -342,6 +344,7 @@
             </ul>
         </div>
     </div>
+   
 </nav>
 
 <div class="page-header header-filter"
@@ -357,13 +360,15 @@
                  class="rounded-circle profile-img">
             <span class="card-text-big" th:text="${team.admin.name}">Username</span>
         </div>
-        <img th:if="${team.urlImage}!=null" class="card-img-top"
-             th:src="${team.urlImage}"
+        <img class="card-img-top"  th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/500/500'}" width="500" height="500"
              alt="Team Image">
+                       
         <div class="card-body">
-            <h6 class="card-title" th:text="${team.name}">Team Name</h6>
+               
+            <h6 class="card-title"><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h6> 
             <p class="card-text-big" th:text="${team.description}">Team Description.</p>
             <p class="card-text">
+                    <img  src="https://teamx-images.s3-eu-west-1.amazonaws.com/icons8-segnaposto-24.png">
                 <small class="text-muted" style="font-size: 18px" th:text="${team.location}">Team Location</small>
             </p>
         </div>
