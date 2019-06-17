@@ -5,10 +5,10 @@
     <title>team</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <style th:inline="text">
+    <style>
         body {
-            background: -webkit-linear-gradient(left, #3931af, #00c6ff);;
-            color: white;
+            background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+            color: black;
             width: 100vh;
         }
 
@@ -40,7 +40,6 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            border: none;
             background-color: #00EA75;
             cursor: pointer;
             border-bottom-style: groove;
@@ -55,15 +54,23 @@
             overflow: hidden;
             position: relative;
         }
+
+        /* Centered text */
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 
 <body>
     <div id="team" class="center-div container">
         <div id="team-img">
-            <!--th:src="${team.urlImage}"-->
-            <!--<img src="https://images.unsplash.com/photo-1560635041-160852985094">-->
-            <p class="attribute" th:text="'Team name: ' + ${team.name} + '!'">Team name</p>
+            <img alt="Team Image"
+                 th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/800/400'}"/>
+            <p class="attribute centered" th:text="${team.name}">Team name</p>
         </div>
         <p class="attribute" th:text="'Description: ' + ${team.description} + '!'">Team description</p>
         <p class="attribute" th:text="'Location: ' + ${team.location} + '!'">Team location</p>
