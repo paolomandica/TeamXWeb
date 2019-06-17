@@ -33,4 +33,10 @@ public class TeamService {
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
+
+    public void update(Team team)
+    {
+        teamRepository.save(team);
+    }
+
 }

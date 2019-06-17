@@ -128,6 +128,24 @@ public class TeamXController {
 		 */
 	}
 
+	@GetMapping(value = "/teams/{teamId}", params = { "follow" })
+	public String followTeam(HttpSession session, Model model, @PathVariable Long teamId) {
+		Team team = teamService.getTeam(teamId);
+		User user = (User) session.getAttribute("user");
+		team.getFollowers().add(user);
+		teamService.update(team);
+		return "redirect:/teams/{teamId}";
+	}
+
+	@GetMapping(value = "/teams/{teamId}", params = { "unfollow" })
+	public String unfollowTeam(HttpSession session, Model model, @PathVariable Long teamId) {
+		Team team = teamService.getTeam(teamId);
+		User user = (User) session.getAttribute("user");
+		team.getFollowers().remove(user);
+		teamService.update(team);
+		return "redirect:/teams/{teamId}";
+	}
+
 	/** join in un team */
 	@PostMapping(value = "/teams/{teamId}", params = { "join" })
 	public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {

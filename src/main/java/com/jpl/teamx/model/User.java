@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Users")
@@ -21,11 +23,16 @@ public class User {
     private String pictureUrl;
     @Column
     private String profileUrl;
+    @Column(length = 2000)
+    private String description;
 
     @OneToMany(mappedBy = "admin",
     cascade = {CascadeType.PERSIST,
             CascadeType.REMOVE})
     private List<Team> createdTeams;
+
+    @ManyToMany(mappedBy = "followers")
+    private List<Team> followingTeams;
 
     public User() {
     }
@@ -41,6 +48,17 @@ public class User {
         this.pictureUrl = picture;
         this.email = email;
         this.profileUrl = profile;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        User that = (User) o;
+        return that.getEmail().equals(this.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.email.hashCode();
     }
 
 
@@ -85,8 +103,20 @@ public class User {
         this.profileUrl = profileUrl;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<Team> getCreatedTeams() {
         return createdTeams;
+    }
+
+    public List<Team> getFollowingTeams() {
+        return followingTeams;
     }
 
 }
