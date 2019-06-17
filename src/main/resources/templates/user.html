@@ -433,39 +433,46 @@
             </div>
 
             <div class="description text-center">
-                <p th:text="${user.description}">An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
+                <p th:text="${user.description} ?:'No description'">An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
                 <button type="button"
                         class="btn btn-primary"
                         data-toggle="modal"
                         data-target="#descriptionModal"
                         data-whatever="">Modify</button>
 
-                <div class="modal fade"
-                     id="descriptionModal"
+                <div class="modal fade" id="descriptionModal"
                      tabindex="-1"
                      role="dialog"
                      data-backdrop="false"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     aria-labelledby="descriptionModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <h5 class="modal-title"
+                                    id="descriptionModalLabel">Description</h5>
+                                <button type="button" class="close"
+                                        data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+                            <form th:action="@{/user?editDescription}"
+                                  method="post" th:object="${user}">
                             <div class="modal-body">
-                                <form>
                                     <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Message:</label>
-                                        <textarea class="form-control" id="message-text"></textarea>
+                                        <label for="description-text"
+                                               class="col-form-label">Description:</label>
+                                        <textarea class="form-control"
+                                                  id="description-text"
+                                                  th:field="*{description}">
+                                        </textarea>
                                     </div>
-                                </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Send message</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -519,6 +526,9 @@
                             </a>
                         </div>
                     </div>
+                    <div th:if="${#lists.size(user.createdTeams)==0}">
+                        <p style="color: #95999c">No teams here</p>
+                    </div>
                 </div>
                 <div class="tab-pane text-center gallery" id="following">
                     <div class="row" th:each="team : ${user.followingTeams}">
@@ -532,6 +542,9 @@
                                      class="text"><h4>Team name</h4></div>
                             </a>
                         </div>
+                    </div>
+                    <div th:if="${#lists.size(user.followingTeams)==0}">
+                        <p style="color: #95999c">No teams here</p>
                     </div>
                 </div>
             </div>

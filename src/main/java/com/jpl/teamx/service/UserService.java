@@ -32,5 +32,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public void updateUser(User user){
+        userRepository.save(user);
+    }
 
 }

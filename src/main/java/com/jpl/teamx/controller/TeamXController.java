@@ -48,6 +48,16 @@ public class TeamXController {
 		return "user";
 	}
 
+	@PostMapping(value = "/user", params = {"editDescription"})
+	public String updateDescription(@ModelAttribute("user") User user,
+									Model model, HttpSession httpSession){
+		User to_persist_user = (User) httpSession.getAttribute("user");
+		to_persist_user.setDescription(user.getDescription());
+		userService.updateUser(to_persist_user);
+		httpSession.setAttribute("user",to_persist_user);
+		return "redirect:/user";
+	}
+
 	
 	/** Trova  user con userId. */
 	@GetMapping("/users/{userId}")
