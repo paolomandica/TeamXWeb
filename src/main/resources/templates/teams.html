@@ -30,15 +30,15 @@
             color: gray;
         }
 
-        .h6, h6 {
-            font-size: 1.75rem !important;
+        h6 {
+            font-size: 1.5vw !important;
             font-weight: 500;
             font-family: Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.5em;
             text-transform: uppercase;
         }
 
-        .h4, h4 {
+        h4 {
             font-weight: 500;
             font-family: Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.5em;
@@ -286,20 +286,26 @@
         }
 
         .card {
-            margin: 20px auto;
+            margin: 0px auto;
             height: auto;
-            width: 50vw;
-            max-height: 60vw;
+            width: 40vw;
+            max-height: 50vw;
             overflow: hidden;
+            scroll-behavior: auto;
+        }
+
+        .card .card-body {
+            height: auto;
+            min-height: 0;
         }
 
         .card .card-text-big {
-            font-size: 24px;
+            font-size: 1vw;
         }
 
         .profile-img {
-            height: 40px;
-            width: 40px;
+            height: 2vw;
+            width: 2vw;
             margin-right: 10px;
         }
 
@@ -330,7 +336,7 @@
             justify-content: center;
         }
 
-        .follow-btn ul li a{
+        .follow-btn ul li a {
             width: 200px;
             padding: 12px 48px;
             text-align: center;
@@ -391,48 +397,47 @@
 </div>
 
 <div class="main main-raised">
+    <div class="row justify-content-center" th:each="team : ${teams}" style="padding: 20px">
+            <div class="card" style="border-radius: 10px">
+                <div class="card-header">
+                    <img th:src="${team.admin.pictureUrl}"
+                         class="rounded-circle profile-img">
+                    <span class="card-text-big" th:text="${team.admin.name}">Username</span>
+                </div>
 
-    <div th:each="team : ${teams}" class="card" style="border-radius: 10px">
-        <div class="card-header">
-            <img th:src="${team.admin.pictureUrl}"
-                 class="rounded-circle profile-img">
-            <span class="card-text-big" th:text="${team.admin.name}">Username</span>
-        </div>
+                <div class="overlay">
+                    <div class="follow-btn">
+                        <ul style="list-style-type:none;">
+                            <li th:unless="${#lists.contains(team.getFollowers(),session.user)}">
+                                <a class="btn" th:href="@{/teams/{id}?follow(id=${team.id})}">FOLLOW</a>
+                            </li>
+                            <li th:if="${#lists.contains(team.getFollowers(),session.user)}">
+                                <a class="btn" th:href="@{/teams/{id}?unfollow(id=${team.id})}"> UNFOLLOW </a>
+                            </li>
+                            <li th:if="${session.user.id}==${team.admin.id}">
+                                <a class="btn" style="color: red;" th:href="@{/teams/{id}?delete(id=${team.id})}">ELIMINA</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <img class="card-img-top" th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/500/500'}"
+                     alt="Team Image">
 
-        <div class="overlay">
-            <div class="follow-btn">
-                <ul style="list-style-type:none;">
-                    <li th:unless="${#lists.contains(team.getFollowers(),session.user)}">
-                        <a class="btn" th:href="@{/teams/{id}?follow(id=${team.id})}">FOLLOW</a>
-                    </li>
-                    <li th:if="${#lists.contains(team.getFollowers(),session.user)}">
-                        <a class="btn" th:href="@{/teams/{id}?unfollow(id=${team.id})}"> UNFOLLOW </a>
-                    </li>
-                    <li th:if="${session.user.id}==${team.admin.id}">
-                            <a class="btn" style="color: red;" th:href="@{/teams/{id}?delete(id=${team.id})}">ELIMINA</a>
-                    </li>
-                </ul>
+                <div class="card-body">
+                    <h6 class="card-title"><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h6>
+                    <p class="card-text-big" th:text="${team.description}">Team Description.</p>
+                    <p class="card-text">
+                        <img src="https://teamx-images.s3-eu-west-1.amazonaws.com/icons8-segnaposto-24.png">
+                        <small class="text-muted" style="font-size: 0.8vw" th:text="${team.location}">Team Location</small>
+                    </p>
+                </div>
             </div>
-        </div>
-        <img class="card-img-top" th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/500/500'}"
-             width="500" height="500"
-             alt="Team Image">
-
-        <div class="card-body">
-            <h6 class="card-title"><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h6>
-            <p class="card-text-big" th:text="${team.description}">Team Description.</p>
-            <p class="card-text">
-                <img src="https://teamx-images.s3-eu-west-1.amazonaws.com/icons8-segnaposto-24.png">
-                <small class="text-muted" style="font-size: 18px" th:text="${team.location}">Team Location</small>
-            </p>
-        </div>
     </div>
-
 
 </div>
 
 <footer class="footer text-center ">
-    <p>TeamX by JPL group</p>
+    <p style="color: white;">TeamX by JPL group</p>
 </footer>
 
 
