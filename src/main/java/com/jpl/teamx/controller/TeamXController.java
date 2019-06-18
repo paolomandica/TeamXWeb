@@ -181,10 +181,9 @@ public class TeamXController {
 	    return mav;
 	  }
 
-	  @RequestMapping(value = "errors", method = RequestMethod.GET)
-	  public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
+	  @GetMapping("/error")
+	  public String renderErrorPage(HttpServletRequest httpRequest,Model model) {
 		   
-		  ModelAndView errorPage = new ModelAndView("errorPage");
 		  String errorMsg = "";
 		  int httpErrorCode = getErrorCode(httpRequest);
    
@@ -206,8 +205,8 @@ public class TeamXController {
 				  break;
 			  }
 		  }
-		  errorPage.addObject("errorMsg", errorMsg);
-		  return errorPage;
+		  model.addAttribute("errorMsg", errorMsg);
+		  return "errorPage";
 	  }
 	   
 	  private int getErrorCode(HttpServletRequest httpRequest) {
