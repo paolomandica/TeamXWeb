@@ -1,6 +1,7 @@
 package com.jpl.teamx.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,7 +11,6 @@ public class Team {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
 	private Long id;
 	
 	@ManyToOne
@@ -18,15 +18,15 @@ public class Team {
 	
 	@Column(nullable = false, length = 25)
 	private String name;
-	
-	@Column
+
 	private String description;
 	
 	@Column(length = 50)
 	private String location;
-	
-	@Column
+
 	private String urlImage;
+
+	private LocalDateTime timestamp;
 
 	@ManyToMany
 	private List<User> followers;
@@ -39,6 +39,7 @@ public class Team {
 		this.description = description;
 		this.location = location;
 		this.urlImage = urlImage;
+		this.timestamp = LocalDateTime.now();
 	}
 
 	@Override
@@ -99,5 +100,9 @@ public class Team {
 	public List<User> getFollowers() {
 		return followers;
 	}
+
+	public LocalDateTime getTimestamp() { return timestamp; }
+
+	public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 	
 }

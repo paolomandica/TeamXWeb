@@ -60,7 +60,6 @@
             box-shadow: 0 4px 18px 0 rgba(0, 0, 0, .12), 0 7px 10px -5px rgba(0, 0, 0, .15) !important;
             z-index: 1000 !important;
             transition: all 150ms ease 0s;
-
         }
 
         .navbar.navbar-transparent {
@@ -160,10 +159,6 @@
             padding: 20px;
         }
 
-        .profile-page .profile {
-            text-align: center;
-        }
-
         .profile-page .profile img {
             max-width: 160px;
             width: 100%;
@@ -232,7 +227,6 @@
         }
 
         .footer p {
-            margin-bottom: 0;
             font-size: 14px;
             margin: 0 0 10px;
             font-weight: 300;
@@ -296,6 +290,7 @@
             height: auto;
             width: 50vw;
             max-height: 60vw;
+            overflow: hidden;
         }
 
         .card .card-text-big {
@@ -308,6 +303,45 @@
             margin-right: 10px;
         }
 
+        /*Hover effect with buttons*/
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            transition: background 0.4s ease;
+        }
+
+        .card:hover .overlay {
+            display: block;
+            background: rgba(0, 0, 0, .3);
+        }
+
+        .follow-btn {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity .25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .follow-btn ul li a{
+            width: 200px;
+            padding: 12px 48px;
+            text-align: center;
+            color: white;
+            border: solid 2px white;
+            z-index: 1;
+        }
+
+        .card:hover .follow-btn {
+            opacity: 1;
+        }
 
     </style>
 
@@ -348,7 +382,7 @@
             </ul>
         </div>
     </div>
-   
+
 </nav>
 
 <div class="page-header header-filter"
@@ -364,15 +398,31 @@
                  class="rounded-circle profile-img">
             <span class="card-text-big" th:text="${team.admin.name}">Username</span>
         </div>
-        <img class="card-img-top"  th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/500/500'}" width="500" height="500"
+
+        <div class="overlay">
+            <div class="follow-btn">
+                <ul style="list-style-type:none;">
+                    <li th:unless="${#lists.contains(team.getFollowers(),session.user)}">
+                        <a class="btn" th:href="@{/teams/{id}?follow(id=${team.id})}">FOLLOW</a>
+                    </li>
+                    <li th:if="${#lists.contains(team.getFollowers(),session.user)}">
+                        <a class="btn" th:href="@{/teams/{id}?unfollow(id=${team.id})}"> UNFOLLOW </a>
+                    </li>
+                    <li th:if="${session.user.id}==${team.admin.id}">
+                            <a class="btn" style="color: red;" th:href="@{/teams/{id}?delete(id=${team.id})}">ELIMINA</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <img class="card-img-top" th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/500/500'}"
+             width="500" height="500"
              alt="Team Image">
-                       
+
         <div class="card-body">
-               
-            <h6 class="card-title"><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h6> 
+            <h6 class="card-title"><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h6>
             <p class="card-text-big" th:text="${team.description}">Team Description.</p>
             <p class="card-text">
-                    <img  src="https://teamx-images.s3-eu-west-1.amazonaws.com/icons8-segnaposto-24.png">
+                <img src="https://teamx-images.s3-eu-west-1.amazonaws.com/icons8-segnaposto-24.png">
                 <small class="text-muted" style="font-size: 18px" th:text="${team.location}">Team Location</small>
             </p>
         </div>

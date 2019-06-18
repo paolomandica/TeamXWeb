@@ -31,7 +31,7 @@ public class TeamService {
     }
 
     public List<Team> getAllTeams() {
-        return teamRepository.findAll();
+        return teamRepository.findAllByOrderByTimestampDesc();
     }
 
     public void update(Team team)
