@@ -2,12 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>TeamX login</title>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        /********************************/
+        /*       Fade Bs-carousel       */
+        /********************************/
+        .fade-carousel {
+            position: relative;
+            height: 100vh;
+        }
+        .fade-carousel .carousel-inner .item {
+            height: 100vh;
+        }
+
+
+        /********************************/
+        /*          Hero Headers        */
+        /********************************/
+        .hero {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            z-index: 3;
+            color: #fff;
+            text-align: center;
+            -webkit-transform: translate3d(-50%,-50%,0);
+            -moz-transform: translate3d(-50%,-50%,0);
+            -ms-transform: translate3d(-50%,-50%,0);
+            -o-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .hero p{
+            font-size: 18px;
+            color: #e2e6ea;
+            margin: 5px;
+        }
+
+        .hero button{
+            margin: 30px;
+        }
+
+        .fade-carousel .carousel-inner .item .hero {
+            opacity: 0;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+            -ms-transition: 2s all ease-in-out .1s;
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+        .fade-carousel .carousel-inner .item.active .hero {
+            opacity: 1;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+            -ms-transition: 2s all ease-in-out .1s;
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+        .carousel-item img {
+            width: auto;
+            height: 100vh;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        /********************************/
+        /*            Overlay           */
+        /********************************/
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background-color: #080d15;
+            opacity: .7;
+        }
+
+
+    </style>
 </head>
 <body>
-<div>
-    <h1>Welcome</h1>
-    <span><a href="/login">Please login</a></span>
+<div id="carousel" class="carousel fade-carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel" data-slide-to="1"></li>
+        <li data-target="#carousel" data-slide-to="2"></li>
+        <li data-target="#carousel" data-slide-to="3"></li>
+    </ol>
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    <div class="carousel-inner">
+        <div class="carousel-item item active">
+            <img class="d-block w-100" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80" alt="First slide">
+            <div class="carousel-caption d-none d-md-block hero">
+                <h1>Welcome to TeamX</h1>
+                <p>We make the roads, you drive the car</p>
+                <a href="/login"><button class="btn btn-info">Login with google</button></a>
+            </div>
+        </div>
+        <div class="carousel-item item">
+            <img class="d-block w-100"
+                 src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1063&q=80" alt="First slide">
+            <div class="carousel-caption d-none d-md-block hero">
+                <h1>Unleash your creativity</h1>
+                <p>Start your next awesome project</p>
+                <a href="/login"><button class="btn btn-info">Login with google</button></a>
+            </div>
+        </div>
+
+        <div class="carousel-item item">
+            <img class="d-block w-100" src="https://images.unsplash.com/photo-1480099225005-2513c8947aec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1165&q=80" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block hero">
+                <h1>Share and discover</h1>
+                <p>Find your team today</p>
+                <a href="/login"><button class="btn btn-info">Login with google</button></a>
+            </div>
+        </div>
+        <div class="carousel-item item">
+            <img class="d-block w-100" src="https://images.unsplash.com/photo-1536925155833-43e9c2b2f499?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block hero">
+                <h1>Start searching</h1>
+                <p>You are not alone</p>
+                <a href="/login"><button class="btn btn-info">Login with google</button></a>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>
