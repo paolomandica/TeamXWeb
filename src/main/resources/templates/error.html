@@ -6,6 +6,9 @@
 </head>
 
 <style>
+  body {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  }
 .wrapper {
   position: relative;
   width: 100%;
@@ -16,7 +19,7 @@
 .background {
   width: 100%;
   position: absolute;
-  background-color: #818da7;
+  
   background-size: 100% 100%;
   min-height: 600px;
   padding-top: 50px;
@@ -462,6 +465,30 @@ html, body {
 * {
   box-sizing: border-box;
 }
+ /* footer */
+
+ footer{
+            margin-top: 10px;
+            color: #555;
+            padding: 25px;
+            font-weight: 300;
+
+        }
+        .footer p{
+            margin-bottom: 0;
+            font-size: 14px;
+            margin: 0 0 10px;
+            font-weight: 300;
+        }
+        footer p a{
+            color: #555;
+            font-weight: 400;
+        }
+
+        footer p a:hover {
+            color: #9f26aa;
+            text-decoration: none;
+        }
 
 </style>
 <body>
@@ -482,10 +509,12 @@ html, body {
         </svg>
     
         <div class="wrapper">
+          
             <!-- ---------------  Text  --------------- -->
             <div class="errorPage">
-                <h1 class="slide-in-top">Oops!</h1>
-                <h3 class="slide-in-left" th:text="${errorMsg}">500</h3>
+                <h1 class="slide-in-top" >Oops!</h1>
+                <h3 class="slide-in-left" >500</h3>
+              <!--  <p th:text="${errorMsg}"></p> -->
                 <h4 class="slide-in-left2">Wrong address.<br>You're pretty far south.</h4>
             </div>
     
@@ -514,15 +543,13 @@ html, body {
                         <div class="leg2_2"></div>
                     </div>
     
-                    <span class="bubble">Homepage maybe?</span>
+                    
                 </div>
             </div>
         </div>
     
     </div>
-    <footer class="footer text-center ">
-        <p>TeamX by JPL group</p>
-    </footer>
+   
     
 </body>
 

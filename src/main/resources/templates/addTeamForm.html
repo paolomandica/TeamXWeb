@@ -159,10 +159,9 @@
                                     <span class="error" th:errors="*{location}" th:if="${#fields.hasErrors('location')}"></span>
                                     <br>
                                     <div class="custom-file">
-                                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
-                                            aria-describedby="inputGroupFileAddon01">
-                                        <span class="custom-file-label" for="inputGroupFile01">
-                                            Choose an image
+                                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" required>
+                                        <span class="custom-file-label" >
+                                          Choose an image
                                         </span>
                                     </div>
                                 </div>
@@ -174,12 +173,29 @@
                                 <input type="submit" class="btnRegister" value="Create Team" />
                             </div>
                         </form>
+                            
                     </div>
                 </div>
             </div>
         </div>
-
+        <a href="/teams"><button class="btn btn-primary" value="Create Team">Go back to Teams</button> </a>
     </div>
 </body>
+<script>
+const uploadButton = document.querySelector('inputGroupFile01');
+const fileInfo = document.querySelector('.custom-file-label');
+const realInput = document.getElementById('inputGroupFile01');
+
+
+
+realInput.addEventListener('change', () => {
+  const name = realInput.value.split(/\\|\//).pop();
+  const truncated = name.length > 20 
+    ? name.substr(name.length - 20) 
+    : name;
+  
+  fileInfo.innerHTML = truncated;
+});
+</script>
 
 </html>
