@@ -68,7 +68,7 @@
             position: relative;
             color: inherit;
             height: 50px;
-            font-size: 1.125rem;
+            font-size:1.625rem;
             line-height: 30px;
             padding: .625rem 0;
             font-weight: 300;
@@ -201,11 +201,6 @@
             font-weight: 300;
         }
 
-        p {
-            font-size: 14px;
-            margin: 0 0 10px;
-        }
-
         .profile-page .profile-tabs {
             margin-top: 4.284rem;
         }
@@ -281,7 +276,7 @@
         }
 
         /*buttons*/
-        .btn {
+        .button {
             position: relative;
             padding: 12px 30px;
             margin: .3125rem 1px;
@@ -298,7 +293,7 @@
             will-change: box-shadow,transform;
         }
 
-        .btn.btn-just-icon {
+        .button.btn-just-icon {
             font-size: 20px;
             height: 41px;
             min-width: 41px;
@@ -309,7 +304,7 @@
             line-height: 41px;
         }
 
-        .btn.btn-just-icon fa{
+        .button.btn-just-icon fa{
             margin-top: 0;
             position: absolute;
             width: 100%;
@@ -320,7 +315,7 @@
             line-height: 41px;
             font-size: 20px;
         }
-        .btn.btn-link{
+        .btn .btn-link{
             background-color: transparent;
             color: #999;
         }
@@ -391,14 +386,14 @@
 <body class="profile-page">
 
 <!-- BOOTSNIPPET CODE -->
-
 <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg "
      color-on-scroll="100"
      id="sectionsNav">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href="/teams">TeamX </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">Profile</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 <span class="navbar-toggler-icon"></span>
                 <span class="navbar-toggler-icon"></span>
@@ -406,8 +401,22 @@
         </div>
 
         <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/teams">
+                        <i class="material-icons">home</i>TeamX
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/teams?add">
+                        <i class="material-icons">add</i>New
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+
 </nav>
 
 <div class="page-header header-filter"
@@ -426,16 +435,18 @@
                         <div class="name">
                             <h3 class="title" th:text="${user.name}">No name user</h3>
                             <h6 th:text="${user.email}"></h6>
-                            <a th:href="@{${user.profileUrl}}" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-google"></i></a>
+                            <a th:href="@{${user.profileUrl}}" class="button btn btn-just-icon btn-link btn-twitter"><i class="fa fa-google"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="description text-center">
-                <p th:text="${user.description} ?:'No description'">An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
+                <p style=" font-size: 14px; margin: 0 0 10px;" th:text="${user.description} ?:'No description'">An artist of considerable range, Chet
+                    Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
+                    records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
                 <button type="button"
-                        class="btn btn-primary"
+                        class="button btn btn-primary"
                         data-toggle="modal"
                         data-target="#descriptionModal"
                         data-whatever="">Modify</button>
@@ -451,7 +462,7 @@
                             <div class="modal-header">
                                 <h5 class="modal-title"
                                     id="descriptionModalLabel">Description</h5>
-                                <button type="button" class="close"
+                                <button type="button" class="button btn close"
                                         data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -469,8 +480,8 @@
                                     </div>
                             </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="button" class="button btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="button btn btn-primary">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -501,52 +512,98 @@
 
             <div class="tab-content tab-space">
                 <div class="tab-pane active text-center gallery" id="admin">
-                    <!-- TEST ROW
-                    <div class="row" >
-                        <div class="col-md-4 ml-auto overlay-image"
-                             style="float: none; margin: 0 auto;"
-                        >
-                            <a href="#" >
-                                <img class="image rounded"
-                                     src="https://picsum.photos/500/500"/>
-                                <div class="text"><h4>Team name</h4></div>
-                            </a>
+                    <div class="row" style="margin: 5%;" th:each="team : ${user.createdTeams}">
+                        <div class="card w-50 ml-auto"
+                             style="float: none; margin: 0 auto;" >
+                            <div class="card-header">
+                                Created by <span th:text="${team.admin.name}">Giulia Lanzillotta</span>
+                            </div>
+                            <div th:if="${team.urlImage}">
+                                <img class="card-img-top" th:src="${team.urlImage}" alt="Card image cap"/>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${team.name}">Team name</h5>
+                                <blockquote class="blockquote mb-0" >
+                                    <p th:text="${team.description}">This is the description replacement.</p>
+                                    <footer class="blockquote-footer"> The admin is searching in :
+                                        <cite title="Source Title" th:text="${team.location ?: 'Anywhere'}">Rome</cite>
+                                    </footer>
+                                </blockquote>
+                                <a th:href="@{/teams/{id}?follow(id=${team.id})}">
+                                    <button class="btn btn-primary"
+                                            th:unless="${#lists.contains(team.getFollowers(),session.user)}">
+                                        FOLLOW
+                                    </button>
+                                </a>
+                                <a th:href="@{/teams/{id}?unfollow(id=${team.id})}">
+                                    <button class="btn btn-secondary"
+                                            th:if="${#lists.contains(team.getFollowers(),session.user)}">
+                                        UNFOLLOW
+                                    </button>
+                                </a>
+                                <a th:href="@{/teams/{id}?delete(id=${team.id})}">
+                                    <button class="btn btn-danger" th:if="${session.user.id}==${team.admin.id}">
+                                        DELETE
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="card-footer text-muted"
+                                 th:text="${#temporals.format(team.timestamp, 'dd-MM-yyyy')}">
+                                03-03-2019
+                            </div>
                         </div>
                     </div>
-                    -->
-                    <div class="row" th:each="team : ${user.createdTeams}">
-                        <div class="col-md-4 ml-auto mr-auto overlay-image"
-                             style="float: none; margin: 0 auto;">
-                            <a th:href="'/teams/' + ${team.id}" >
-                            <img class="image rounded"
-                                 th:src="${(team.urlImage != null) ?
-                                 team.urlImage : 'https://picsum.photos/500/500'}"/>
-                                <div th:text="${team.name}"
-                                     class="text"><h4>Team name</h4></div>
-                            </a>
-                        </div>
-                    </div>
+
                     <div th:if="${#lists.size(user.createdTeams)==0}">
-                        <p style="color: #95999c">No teams here</p>
+                        <p style="font-size: 14px; margin: 0 0 10px; color: #95999c">No teams here</p>
                     </div>
                 </div>
                 <div class="tab-pane text-center gallery" id="following">
-                    <div class="row" th:each="team : ${user.followingTeams}">
-                        <div class="col-md-4 ml-auto overlay-image"
-                             style="float: none; margin: 0 auto;">
-                            <a th:href="'/teams/' + ${team.id}" >
-                                <img class="image rounded"
-                                     th:src="${(team.urlImage != null) ?
-                                 team.urlImage : 'https://picsum.photos/500/500'}"/>
-                                <div th:text="${team.name}"
-                                     class="text"><h4>Team name</h4></div>
-                            </a>
+                        <div class="row" style="margin: 5%;" th:each="team : ${user.followingTeams}">
+                            <div class="card w-50 ml-auto"
+                                 style="float: none; margin: 0 auto;" >
+                                <div class="card-header">
+                                    Created by <span th:text="${team.admin.name}">Giulia Lanzillotta</span>
+                                </div>
+                                <div th:if="${team.urlImage}">
+                                    <img class="card-img-top" th:src="${team.urlImage}" alt="Card image cap"/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${team.name}">Team name</h5>
+                                    <blockquote class="blockquote mb-0" >
+                                        <p th:text="${team.description}">This is the description replacement.</p>
+                                        <footer class="blockquote-footer"> The admin is searching in :
+                                            <cite title="Source Title" th:text="${team.location ?: 'Anywhere'}">Rome</cite>
+                                        </footer>
+                                    </blockquote>
+                                    <a th:href="@{/teams/{id}?follow(id=${team.id})}">
+                                        <button class="btn btn-primary"
+                                                th:unless="${#lists.contains(team.getFollowers(),session.user)}">
+                                            FOLLOW
+                                        </button>
+                                    </a>
+                                    <a th:href="@{/teams/{id}?unfollow(id=${team.id})}">
+                                        <button class="btn btn-secondary"
+                                                th:if="${#lists.contains(team.getFollowers(),session.user)}">
+                                            UNFOLLOW
+                                        </button>
+                                    </a>
+                                    <a th:href="@{/teams/{id}?delete(id=${team.id})}">
+                                        <button class="btn btn-danger" th:if="${session.user.id}==${team.admin.id}">
+                                            DELETE
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="card-footer text-muted"
+                                     th:text="${#temporals.format(team.timestamp, 'dd-MM-yyyy')}">
+                                    03-03-2019
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${#lists.size(user.followingTeams)==0}">
+                            <p style="font-size: 14px; margin: 0 0 10px; color: #95999c">No teams here</p>
                         </div>
                     </div>
-                    <div th:if="${#lists.size(user.followingTeams)==0}">
-                        <p style="color: #95999c">No teams here</p>
-                    </div>
-                </div>
             </div>
 
 
@@ -808,12 +865,5 @@
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 
-
-<!-- INITIAL CODE : DO NOT DELETE
-Here`s all the information we have about you:
-<h1 th:text="${session.user.name}"></h1>
-profile : <span th:text="${session.user.profileUrl}">profile</span>
-email : <span th:text="${session.user.email}">email</span>
-<img th:src="${session.user.pictureUrl}" alt="Picture"/>-->
 </body>
 </html>
