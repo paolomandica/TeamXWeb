@@ -82,13 +82,13 @@ public class TeamXController {
 		return "teams";
 	}
 
-	/** Trova il team con teamId. */
+	/* Trova il team con teamId.
 	@GetMapping("/teams/{teamId}")
 	public String getTeam(Model model, @PathVariable(name = "teamId") Long teamId) {
 		Team team = teamService.getTeam(teamId);
 		model.addAttribute("team", team);
 		return "team";
-	}
+	}*/
 
 	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "add" })
@@ -98,7 +98,6 @@ public class TeamXController {
 		return "addTeamForm";
 	}
 
-	/** Crea un nuovo team (form). */
 	@GetMapping(value = "/teams", params = { "logout" })
 	public String doLogout(Model model, HttpSession session) {
 		session.invalidate();
@@ -128,17 +127,17 @@ public class TeamXController {
 
 	/** cancella un team . */
 	@GetMapping(value = "/teams/{teamId}", params = { "delete" })
-	public String deleteTeam(Model model, @PathVariable Long teamId) {
+	public String deleteTeam(HttpSession session, Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
-		// if(team.getAdmin() == new User()) {// da introdurre user corrente
+		User user = (User) session.getAttribute("user");
+		if(team.getAdmin().getId().equals(user.getId())) {
 		teamService.deleteTeam(team);
 		model.addAttribute("message", "team eliminato con successo");
 		return "redirect:/teams";
-		// }
-		/*
-		 * model.addAttribute("team", team); model.addAttribute("error",
-		 * "ci hai provato!!"); return "team";
-		 */
+		}
+		else {
+			return "redirect:/teams";
+		}
 	}
 
 	@GetMapping(value = "/teams/{teamId}", params = {"follow"})
