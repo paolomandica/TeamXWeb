@@ -335,6 +335,14 @@
             border: solid 2px white;
             z-index: 1;
         }
+        .h6, h6 {
+            font-size: .75rem !important;
+            font-weight: 500;
+            font-family: Roboto,Helvetica,Arial,sans-serif;
+            line-height: 1.5em;
+            text-transform: uppercase;
+            color: #00ac6a;
+        }
 
 
 
@@ -397,14 +405,15 @@
         <div class="row" style="margin: 5%;" th:each="team : ${teams}">
             <div class="card col-md-7 ml-auto"
                  style="float: none; margin: 0 auto;" >
-                <div class="card-header">
+               <a th:href="@{/users/{id}(id=${team.admin.id})}"> <button class="btn btn-secondary"><div class="card-header">
                     Created by <span th:text="${team.admin.name}">Giulia Lanzillotta</span>
-                </div>
+                </div> </button> </a>
                 <div th:if="${team.urlImage}">
                     <img class="card-img-top" th:src="${team.urlImage}" alt="Card image cap"/>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${team.name}">Team name</h5>
+                    <h6 th:text="${#lists.size(team.getFollowers())} + ' followers'">25</h6>
                     <blockquote class="blockquote mb-0" >
                         <p th:text="${team.description}">This is the description replacement.</p>
                         <footer class="blockquote-footer"> The admin is searching in :
