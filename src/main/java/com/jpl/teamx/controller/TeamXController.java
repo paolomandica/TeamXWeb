@@ -114,7 +114,7 @@ public class TeamXController {
 			Team team = teamService.createTeam(user, form.getName(), form.getDescription(), form.getLocation(),
 					urlImage);
 			model.addAttribute("user", user);
-			return "redirect:/teams/" + team.getId().toString();
+			return "redirect:/teams";
 		} else
 			return "addTeamForm";
 	}
@@ -134,13 +134,13 @@ public class TeamXController {
 		 */
 	}
 
-	@GetMapping(value = "/teams/{teamId}", params = { "follow" })
+	@GetMapping(value = "/teams/{teamId}", params = {"follow"})
 	public String followTeam(HttpSession session, Model model, @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
 		User user = (User) session.getAttribute("user");
 		team.getFollowers().add(user);
 		teamService.update(team);
-		return "redirect:/teams/{teamId}";
+		return "redirect:/teams";
 	}
 
 	@GetMapping(value = "/teams/{teamId}", params = { "unfollow" })
@@ -149,21 +149,21 @@ public class TeamXController {
 		User user = (User) session.getAttribute("user");
 		team.getFollowers().remove(user);
 		teamService.update(team);
-		return "redirect:/teams/{teamId}";
+		return "redirect:/teams";
 	}
 
-	/** join in un team */
-	@PostMapping(value = "/teams/{teamId}", params = { "join" })
-	public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {
-		Team team = teamService.getTeam(teamId);
-		String message = "da modificare";
-		// TODO: send email
-		// User u = new User("da", "cambiare", "non so come");
-		// userService.sendEmail(u, u, message);
-		model.addAttribute("team", team);
-		model.addAttribute("message", "richiesta inviata con successo");
-		return "team";
-	}
+	// /** join in un team */
+	// @PostMapping(value = "/teams/{teamId}", params = { "join" })
+	// public String joinTeam(Model model, @PathVariable Long teamId) throws Exception {
+	// 	Team team = teamService.getTeam(teamId);
+	// 	String message = "da modificare";
+	// 	// TODO: send email
+	// 	// User u = new User("da", "cambiare", "non so come");
+	// 	// userService.sendEmail(u, u, message);
+	// 	model.addAttribute("team", team);
+	// 	model.addAttribute("message", "richiesta inviata con successo");
+	// 	return "team";
+	// }
 
 	@ExceptionHandler(MultipartException.class)
 	@ResponseBody
@@ -195,36 +195,5 @@ public class TeamXController {
 		model.addAttribute("errorMsg", new Integer(400));
 		return "error";
 	}
-/*	@GetMapping("/error")
-	public String renderErrorPage(HttpServletRequest httpRequest, Model model) {
-		System.out.println("ciao core");
-		String errorMsg = "";
-		int httpErrorCode = getErrorCode(httpRequest);
-
-		switch (httpErrorCode) {
-		case 400: {
-			errorMsg = "Http Error Code: 400. Bad Request";
-			break;
-		}
-		case 401: {
-			errorMsg = "Http Error Code: 401. Unauthorized";
-			break;
-		}
-		case 404: {
-			errorMsg = "Http Error Code: 404. Resource not found";
-			break;
-		}
-		case 500: {
-			errorMsg = "Http Error Code: 500. Internal Server Error";
-			break;
-		}
-		}
-		model.addAttribute("errorMsg", errorMsg);
-		return "errorPage";
-	}
-
-	private int getErrorCode(HttpServletRequest httpRequest) {
-		return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
-	}*/
 
 }
