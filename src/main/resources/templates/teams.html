@@ -341,8 +341,9 @@
             font-family: Roboto,Helvetica,Arial,sans-serif;
             line-height: 1.5em;
             text-transform: uppercase;
-            color: #00ac6a;
         }
+
+
 
 
 
@@ -413,7 +414,9 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${team.name}">Team name</h5>
-                    <h6 th:text="${#lists.size(team.getFollowers())} + ' followers'">25</h6>
+                    <h7 class="card-subtitle" style="color: #00ac8a;">
+                        <span th:text="${#lists.size(team.getFollowers())}"
+                              >25</span> FOLLOWERS</h7>
                     <blockquote class="blockquote mb-0" >
                         <p th:text="${team.description}">This is the description replacement.</p>
                         <footer class="blockquote-footer"> The admin is searching in :
