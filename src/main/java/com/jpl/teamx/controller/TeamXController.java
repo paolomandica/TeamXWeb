@@ -46,6 +46,7 @@ public class TeamXController {
 		}
 		// Refreshing user informations
 		model.addAttribute("user", userService.getUser(user.getId()));
+		session.setAttribute("actualPage","user");
 		return "user";
 	}
 
@@ -60,11 +61,13 @@ public class TeamXController {
 
 	/** Trova user con userId. */
 	@GetMapping("/users/{userId}")
-	public String getUser(Model model, @PathVariable(name = "userId") String userId) {
+	public String getUser(Model model, @PathVariable(name = "userId") String userId,
+						  HttpSession session) {
 		if (userId == null || userService.getUser(userId) == null)
 			return "redirect:/";
 		User user = userService.getUser(userId);
 		model.addAttribute("user", user);
+		session.setAttribute("actualPage","user");
 		return "user";
 	}
 
@@ -79,6 +82,7 @@ public class TeamXController {
 		}
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
+		session.setAttribute("actualPage","teams");
 		return "teams";
 	}
 
@@ -141,12 +145,13 @@ public class TeamXController {
 	}
 
 	@GetMapping(value = "/teams/{teamId}", params = {"follow"})
-	public String followTeam(HttpSession session, Model model, @PathVariable Long teamId) {
+	public String followTeam(HttpSession session, Model model,
+							 @PathVariable Long teamId) {
 		Team team = teamService.getTeam(teamId);
 		User user = (User) session.getAttribute("user");
 		team.getFollowers().add(user);
 		teamService.update(team);
-		return "redirect:/teams";
+		return "redirect:/"+session.getAttribute("actualPage");
 	}
 
 	@GetMapping(value = "/teams/{teamId}", params = { "unfollow" })
@@ -155,7 +160,7 @@ public class TeamXController {
 		User user = (User) session.getAttribute("user");
 		team.getFollowers().remove(user);
 		teamService.update(team);
-		return "redirect:/teams";
+		return "redirect:/"+session.getAttribute("actualPage");
 	}
 
 	// /** join in un team */
