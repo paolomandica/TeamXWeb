@@ -413,6 +413,12 @@
                         <i class="material-icons">add</i>New
                     </a>
                 </li>
+
+                <li class="nav-item" >
+                    <a class="nav-link" href="/teams?logout">
+                        <i class="material-icons">exit_to_app</i>Logout
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -445,12 +451,13 @@
                 <p style=" font-size: 14px; margin: 0 0 10px;" th:text="${user.description} ?:'No description'">An artist of considerable range, Chet
                     Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
                     records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
+                <div th:if="${session.user.id}==${user.id}">
                 <button type="button"
                         class="button btn btn-primary"
                         data-toggle="modal"
                         data-target="#descriptionModal"
                         data-whatever="">Modify</button>
-
+                </div>
                 <div class="modal fade" id="descriptionModal"
                      tabindex="-1"
                      role="dialog"

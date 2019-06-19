@@ -98,6 +98,13 @@ public class TeamXController {
 		return "addTeamForm";
 	}
 
+	/** Crea un nuovo team (form). */
+	@GetMapping(value = "/teams", params = { "logout" })
+	public String doLogout(Model model, HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+
 	/** Crea un nuovo team. */
 	@PostMapping("/teams")
 	public String addTeam(HttpSession session, Model model, @ModelAttribute("form") @Valid AddTeamForm form,
