@@ -405,10 +405,14 @@
     <div class="text-center gallery" >
         <div class="row" style="margin: 5%;" th:each="team : ${teams}">
             <div class="card col-md-7 ml-auto"
-                 style="float: none; margin: 0 auto;" >
-               <a th:href="@{/users/{id}(id=${team.admin.id})}"> <button class="btn btn-secondary"><div class="card-header">
+                 style="float: none; margin: 0 auto;">
+               <a th:href="@{/users/{id}(id=${team.admin.id})}">
+                   <button class="btn btn-secondary">
+                   <div class="card-header">
                     Created by <span th:text="${team.admin.name}">Giulia Lanzillotta</span>
-                </div> </button> </a>
+               </div></button>
+               </a>
+
                 <div th:if="${team.urlImage}">
                     <img class="card-img-top" th:src="${team.urlImage}" alt="Card image cap"/>
                 </div>

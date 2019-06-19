@@ -536,13 +536,13 @@
                                         <cite title="Source Title" th:text="${team.location ?: 'Anywhere'}">Rome</cite>
                                     </footer>
                                 </blockquote>
-                                <a th:href="@{/teams/{id}?follow(id=${team.id})}">
+                                <a th:href="@{/teams/{id}?follow(id=${team.id})&page=user}">
                                     <button class="btn btn-primary"
                                             th:unless="${#lists.contains(team.getFollowers(),session.user)}">
                                         FOLLOW
                                     </button>
                                 </a>
-                                <a th:href="@{/teams/{id}?unfollow(id=${team.id})}">
+                                <a th:href="@{/teams/{id}?unfollow(id=${team.id})&page=user}">
                                     <button class="btn btn-secondary"
                                             th:if="${#lists.contains(team.getFollowers(),session.user)}">
                                         UNFOLLOW
