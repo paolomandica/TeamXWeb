@@ -73,10 +73,10 @@ public class TeamXController {
 	public String getTeams(Model model, HttpSession session) {
 		if (session.getAttribute("user") == null) {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			userService.createUser(user);
+			if(userService.getUser(user.getId())==null){
+				userService.createUser(user);}
 			session.setAttribute("user", user);
 		}
-
 		List<Team> teams = teamService.getAllTeams();
 		model.addAttribute("teams", teams);
 		return "teams";

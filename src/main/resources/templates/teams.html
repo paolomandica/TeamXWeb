@@ -285,22 +285,14 @@
             font-weight: bold;
         }
 
-        .card {
-            margin: 0px auto;
-            height: auto;
-            width: 40vw;
-            max-height: 50vw;
-            overflow: hidden;
-            scroll-behavior: auto;
+        .gallery {
+            margin-top: 3.213rem;
+            padding-bottom: 50px;
         }
 
-        .card .card-body {
-            height: auto;
-            min-height: 0;
-        }
-
-        .card .card-text-big {
-            font-size: 1vw;
+        .gallery img {
+            width: 100%;
+            margin-bottom: 2.142rem;
         }
 
         .profile-img {
@@ -318,11 +310,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0);
             transition: background 0.4s ease;
-        }
-
-        .card:hover .overlay {
-            display: block;
-            background: rgba(0, 0, 0, .3);
         }
 
         .follow-btn {
@@ -349,9 +336,7 @@
             z-index: 1;
         }
 
-        .card:hover .follow-btn {
-            opacity: 1;
-        }
+
 
     </style>
 
@@ -401,41 +386,52 @@
 </div>
 
 <div class="main main-raised">
-    <div class="row justify-content-center" th:each="team : ${teams}" style="padding: 20px">
-            <div class="card" style="border-radius: 10px">
+
+    <div class="text-center gallery" >
+        <div class="row" style="margin: 5%;" th:each="team : ${teams}">
+            <div class="card col-md-7 ml-auto"
+                 style="float: none; margin: 0 auto;" >
                 <div class="card-header">
-                    <img th:src="${team.admin.pictureUrl}"
-                         class="rounded-circle profile-img">
-                    <span class="card-text-big" th:text="${team.admin.name}">Username</span>
+                    Created by <span th:text="${team.admin.name}">Giulia Lanzillotta</span>
                 </div>
-
-                <div class="overlay">
-                    <div class="follow-btn">
-                        <ul style="list-style-type:none;" class="container-fluid">
-                            <li th:unless="${#lists.contains(team.getFollowers(),session.user)}">
-                                <a class="btn" th:href="@{/teams/{id}?follow(id=${team.id})}">FOLLOW</a>
-                            </li>
-                            <li th:if="${#lists.contains(team.getFollowers(),session.user)}">
-                                <a class="btn" th:href="@{/teams/{id}?unfollow(id=${team.id})}"> UNFOLLOW </a>
-                            </li>
-                            <li th:if="${session.user.id}==${team.admin.id}">
-                                <a class="btn" style="color: red;" th:href="@{/teams/{id}?delete(id=${team.id})}">ELIMINA</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div th:if="${team.urlImage}">
+                    <img class="card-img-top" th:src="${team.urlImage}" alt="Card image cap"/>
                 </div>
-                <img class="card-img-top" th:src="${(team.urlImage != null) ? team.urlImage : 'https://picsum.photos/500/500'}"
-                     alt="Team Image">
-
                 <div class="card-body">
-                    <h6 class="card-title"><a th:href="'teams/' + ${team.id}" th:text="${team.name}"></a></h6>
-                    <p class="card-text-big" th:text="${team.description}">Team Description.</p>
-                    <p class="card-text">
-                        <img src="https://teamx-images.s3-eu-west-1.amazonaws.com/icons8-segnaposto-24.png">
-                        <small class="text-muted" style="font-size: 0.8vw" th:text="${team.location}">Team Location</small>
-                    </p>
+                    <h5 class="card-title" th:text="${team.name}">Team name</h5>
+                    <blockquote class="blockquote mb-0" >
+                        <p th:text="${team.description}">This is the description replacement.</p>
+                        <footer class="blockquote-footer"> The admin is searching in :
+                            <cite title="Source Title" th:text="${team.location ?: 'Anywhere'}">Rome</cite>
+                        </footer>
+                    </blockquote>
+                    <a th:href="@{/teams/{id}?follow(id=${team.id})}">
+                        <button class="btn btn-primary"
+                                th:unless="${#lists.contains(team.getFollowers(),session.user)}">
+                            FOLLOW
+                        </button>
+                    </a>
+                    <a th:href="@{/teams/{id}?unfollow(id=${team.id})}">
+                        <button class="btn btn-secondary"
+                                th:if="${#lists.contains(team.getFollowers(),session.user)}">
+                            UNFOLLOW
+                        </button>
+                    </a>
+                    <a th:href="@{/teams/{id}?delete(id=${team.id})}">
+                        <button class="btn btn-danger" th:if="${session.user.id}==${team.admin.id}">
+                            DELETE
+                        </button>
+                    </a>
+                </div>
+                <div class="card-footer text-muted"
+                     th:text="${#temporals.format(team.timestamp, 'dd-MM-yyyy')}">
+
                 </div>
             </div>
+        </div>
+        <div th:if="${#lists.size(teams)==0}">
+            <p style="font-size: 14px; margin: 0 0 10px; color: #95999c">No teams here</p>
+        </div>
     </div>
 
 </div>
