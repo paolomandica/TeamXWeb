@@ -38,39 +38,6 @@ public class TeamXController {
 	@Autowired
 	private ImageStorageService imageStorageService;
 
-	@GetMapping("/user")
-	public String getUserPage(Model model, HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			return "redirect:/";
-		}
-		// Refreshing user informations
-		model.addAttribute("user", userService.getUser(user.getId()));
-		session.setAttribute("actualPage","user");
-		return "user";
-	}
-
-	@PostMapping(value = "/user", params = { "editDescription" })
-	public String updateDescription(@ModelAttribute("user") User user, Model model, HttpSession httpSession) {
-		User to_persist_user = (User) httpSession.getAttribute("user");
-		to_persist_user.setDescription(user.getDescription());
-		userService.updateUser(to_persist_user);
-		httpSession.setAttribute("user", to_persist_user);
-		return "redirect:/user";
-	}
-
-	/** Trova user con userId. */
-	@GetMapping("/users/{userId}")
-	public String getUser(Model model, @PathVariable(name = "userId") String userId,
-						  HttpSession session) {
-		if (userId == null || userService.getUser(userId) == null)
-			return "redirect:/";
-		User user = userService.getUser(userId);
-		model.addAttribute("user", user);
-		session.setAttribute("actualPage","user");
-		return "user";
-	}
-
 	/** restituisce tutti i team */
 	@GetMapping("/teams")
 	public String getTeams(Model model, HttpSession session) {
