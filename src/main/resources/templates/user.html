@@ -142,7 +142,6 @@
         }
 
         .header-filter::before {
-            background: rgba(0,0,0,.5);
         }
 
         .main-raised {
@@ -369,6 +368,10 @@
             width: 100%;
         }
 
+        body {
+            background: -webkit-linear-gradient(right, #3931af, #00c6ff);
+        }
+
         /* New overlay appearance on hover */
         .overlay-image .normal {
             transition: .5s ease;
@@ -386,7 +389,8 @@
 <body class="profile-page">
 
 <!-- BOOTSNIPPET CODE -->
-<nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg "
+<nav class="navbar navbar-color-on-scroll
+navbar-transparent fixed-top navbar-expand-lg "
      color-on-scroll="100"
      id="sectionsNav">
     <div class="container">
@@ -427,7 +431,7 @@
 
 <div class="page-header header-filter"
      data-parallax="true"
-     style="background: -webkit-linear-gradient(top, #3931af, #00c6ff);"></div>
+     style="background: transparent;"></div>
 <div class="main main-raised">
     <div class="profile-content">
         <div class="container">
@@ -501,13 +505,13 @@
                     <div class="profile-tabs">
                         <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#admin" role="tab" data-toggle="tab">
+                                <a class="nav-link" href="#admin" role="tab" data-toggle="tab">
                                     <i class="material-icons">group</i>
                                     Admin
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#following" role="tab" data-toggle="tab">
+                                <a class="nav-link active" href="#following" role="tab" data-toggle="tab">
                                     <i class="material-icons">star</i>
                                     Following
                                 </a>
@@ -518,7 +522,7 @@
             </div>
 
             <div class="tab-content tab-space">
-                <div class="tab-pane active text-center gallery" id="admin">
+                <div class="tab-pane  text-center gallery" id="admin">
                     <div class="row" style="margin: 5%;" th:each="team : ${user.createdTeams}">
                         <div class="card w-50 ml-auto"
                              style="float: none; margin: 0 auto;" >
@@ -565,7 +569,7 @@
                         <p style="font-size: 14px; margin: 0 0 10px; color: #95999c">No teams here</p>
                     </div>
                 </div>
-                <div class="tab-pane text-center gallery" id="following">
+                <div class="tab-pane active text-center gallery" id="following">
                         <div class="row" style="margin: 5%;" th:each="team : ${user.followingTeams}">
                             <div class="card w-50 ml-auto"
                                  style="float: none; margin: 0 auto;" >
@@ -618,7 +622,7 @@
     </div>
 </div>
 
-<footer class="footer text-center ">
+<footer class="footer text-center" style="color: #e2e6ea">
     <p>TeamX by JPL group</p>
 </footer>
 
