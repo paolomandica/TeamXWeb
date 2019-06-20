@@ -2,7 +2,6 @@ package com.jpl.teamx.form;
 
 
 
-import com.jpl.teamx.model.User;
 
 import javax.validation.constraints.Size;
 
