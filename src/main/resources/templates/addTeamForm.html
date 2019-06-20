@@ -174,10 +174,8 @@
                             <div class="container" style="display: flex;
                             align-items: center; justify-content: center; padding: 2em;">
                                 <button type="submit" class="btn btn-primary">Create Team </button>
-                                <a href="/teams"><button class="btn" style="margin: 0.3em;
+                                <a th:href="@{'/'+${session.actualPage}}"><button type="button" class="btn" style="margin: 0.3em;
                                 color: #fff; background: #95999c">Cancel</button> </a>
-
-
                             </div>
                             </div>
                         </form>
