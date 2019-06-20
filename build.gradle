@@ -27,7 +27,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	//runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	
-	implementation 'org.springframework.session:spring-session'
+	implementation 'org.springframework.session:spring-session-core'
 	compile 'org.postgresql:postgresql'
 	implementation 'org.springframework.security:spring-security-jwt'
 	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
